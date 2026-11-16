@@ -64,9 +64,10 @@ Alternatives, if you prefer a different flavour:
 | `Day One` | strong for the tracker and answers | very generic; every game has a day one |
 | `PreLoad` | clever, launch-specific | obscure outside the audience |
 
-**Action:** check `clear212.com`, `clear212.gg` and the social handles. If taken,
-`getclear212.com` or `clear212.app` are fine. I could not verify availability from
-here — do not register on my say-so.
+**Decision (16 Nov 2026):** the name is **Clear212**. It launches on the domain you
+already own, at **clear212.mo-automation.com** — nothing to buy. If the hub outgrows
+that, buy `clear212.com` later and 301-redirect; only `sitemap.xml` and `robots.txt`
+need to change.
 
 **Arabic:** keep one brand. `Clear212` — العربية: "جاهز للمنتصف الليل" as the
 tagline. One brand, two languages, no duplicated effort.

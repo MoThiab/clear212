@@ -25,7 +25,7 @@ Rockstar logos or artwork are used.
 | `growth-plan.md` | Name options, market reality, attraction channels, the money ladder, the seven-day plan. | A decision on the name. |
 | `caption-kit.md` | The X caption prompt, a worked example, X eligibility rules, affiliate math. | Nothing. |
 | `briefing/` | The daily morning briefing: prompt, output template, and the cron job that runs it. | Nothing to build; it runs daily. |
-| `sitemap.xml` / `robots.txt` | Search-engine discovery. | Update the domain from `clear212.com` once registered. |
+| `sitemap.xml` / `robots.txt` | Search-engine discovery, pointed at `clear212.mo-automation.com`. | Nothing — already set. |
 | `design-system/MASTER.md` | The visual system the pages share. | Nothing. |
 
 ## How to update
