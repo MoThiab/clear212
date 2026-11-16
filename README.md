@@ -12,12 +12,21 @@ Rockstar logos or artwork are used.
 
 | File | Job | Needs from you |
 |---|---|---|
-| `index.html` | Countdown page. The pre-launch traffic magnet. Local-time countdown, day-one checklist (saved), launch facts. | Nothing. Ship it. |
+| `index.html` | Countdown page. Local-time countdown, day-one checklist (saved), launch facts, optional email capture. | A Formspree endpoint (optional — the card stays hidden until you set `FORMSPREE_ENDPOINT`). |
 | `answers.html` | The answers page. 19 searched Q&As with sources and a product-link slot each. | Affiliate URLs (optional — links stay hidden until you add them). |
 | `tracker.html` | Progress tracker. Story / side jobs / collectibles / vehicles, per-section and overall bars, saved in the browser. | Nothing. |
+| `privacy.html` | Privacy policy. Device storage, affiliate cookies, email, analytics stance. | Replace `[YOUR EMAIL]`. |
+| `terms.html` | Terms of use. Fan-site and trademark notice, disclaimer, liability. | Replace `[YOUR EMAIL]`. |
+| `refunds.html` | Refund policy. Free today; 14-day terms if a digital product is added. | Nothing. |
+| `disclosure.html` | Full affiliate disclosure (Amazon Associates statement). | Nothing. |
+| `contact.html` | Contact page — corrections, refunds, takedowns. | Replace `[YOUR EMAIL]`. |
+| `assets/legal.css` | Shared styles for the five legal pages. | Nothing. |
+| `assets/favicon.svg` | Site icon — the 212 mark. | Nothing. |
+| `growth-plan.md` | Name options, market reality, attraction channels, the money ladder, the seven-day plan. | A decision on the name. |
 | `caption-kit.md` | The X caption prompt, a worked example, X eligibility rules, affiliate math. | Nothing. |
 | `briefing/` | The daily morning briefing: prompt, output template, and the cron job that runs it. | Nothing to build; it runs daily. |
-| `design-system/MASTER.md` | The visual system the three pages share. | Nothing. |
+| `sitemap.xml` / `robots.txt` | Search-engine discovery. | Update the domain from `clear212.com` once registered. |
+| `design-system/MASTER.md` | The visual system the pages share. | Nothing. |
 
 ## How to update
 
@@ -77,15 +86,25 @@ matches the purchase.
 
 ## What to do next, in order
 
-1. Host the three HTML files. Any static host works (Netlify, Cloudflare Pages,
-   GitHub Pages, itch.io-style static). They are plain files — no server.
-2. Apply to Amazon Associates (or your local equivalent). Approval takes time and
-   requires a working site, so do it before launch week.
-3. Paste the affiliate URLs into `answers.html` → `PRODUCTS`.
-4. Turn on the daily briefing cron in `briefing/`.
-5. Post the countdown page to wherever your audience already is.
-6. After launch, read the search data and add answers for the questions that
-   actually show up. The page gets better every time you add one.
+1. **Pick the name.** Recommendation and alternatives are in `growth-plan.md` §3.
+   Everything is built as **Clear212** — renaming is a find-and-replace of that one
+   word, plus `sitemap.xml` and `robots.txt`.
+2. **Register the domain** and update `sitemap.xml` / `robots.txt` to the real
+   domain. Submit `sitemap.xml` to Google Search Console.
+3. **Host the files.** Any static host works (Netlify, Cloudflare Pages, GitHub
+   Pages). They are plain files — no server, no build.
+4. **Replace `[YOUR EMAIL]`** in `privacy.html`, `terms.html` and `contact.html`.
+5. **Turn on the email capture**: create a free Formspree form and paste the
+   endpoint into `FORMSPREE_ENDPOINT` in `index.html`. The card stays hidden until
+   you do.
+6. **Apply to Amazon Associates** (or your local equivalent). Approval takes time
+   and requires a working site, so do it before launch week.
+7. **Paste the affiliate URLs** into `answers.html` → `PRODUCTS`.
+8. **Turn on the daily briefing cron** (`briefing/`).
+9. **Post the countdown page** to wherever your audience already is, and start the
+   seven-day plan in `growth-plan.md`.
+10. After launch, read the search data and add answers for the questions that
+    actually show up. The page gets better every time you add one.
 
 ## Risks and limits
 

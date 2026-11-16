@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Launch-week hub: everything public, nothing to hide.
+Sitemap: https://clear212.com/sitemap.xml

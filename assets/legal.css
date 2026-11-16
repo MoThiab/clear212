@@ -1,0 +1,52 @@
+/* Shared styles for the legal / informational pages. Same tokens as the main pages. */
+:root{
+  --bg:#0b0a14; --card:#161430; --card-2:#1d1a42; --border:#2c2854;
+  --text:#ededf7; --muted:#a29ccb; --faint:#9a94c0;
+  --pink:#ff2e7e; --pink-2:#ff5c9d; --cyan:#22d3ee; --violet:#7c3aed; --ok:#34d399;
+  --r:18px; --maxw:760px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:"Chakra Petch",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:16px; line-height:1.7; min-height:100vh; overflow-x:hidden;
+}
+body::before{
+  content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(900px 520px at 10% -10%, rgba(124,58,237,.34), transparent 62%),
+    radial-gradient(820px 500px at 94% 2%,  rgba(255,46,126,.24), transparent 60%);
+}
+a{color:var(--cyan); text-underline-offset:3px}
+a:focus-visible{outline:3px solid var(--cyan); outline-offset:2px; border-radius:4px}
+
+.topbar{display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:16px 0 4px; max-width:var(--maxw); margin:0 auto; padding-left:20px; padding-right:20px}
+.brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.06em; font-size:14px; color:var(--text); text-decoration:none}
+.brand .dot{width:10px;height:10px;border-radius:3px;background:linear-gradient(135deg,var(--pink),var(--violet));box-shadow:0 0 14px rgba(255,46,126,.7)}
+.badge{font-size:12px; font-weight:600; color:var(--text); border:1px solid var(--border); border-radius:999px; padding:5px 11px; white-space:nowrap}
+
+.legal{max-width:var(--maxw); margin:0 auto; padding:22px 20px 48px}
+.kicker{font-size:12.5px; letter-spacing:.22em; text-transform:uppercase; color:var(--cyan); margin:0 0 10px}
+h1{font-family:"Russo One",system-ui,sans-serif; font-weight:400; font-size:clamp(30px,8vw,46px);
+   line-height:1.08; margin:0 0 8px; background:linear-gradient(100deg,#fff 5%,var(--pink-2) 45%,var(--violet) 82%);
+   -webkit-background-clip:text; background-clip:text; color:transparent}
+.updated{color:var(--faint); font-size:13.5px; margin:0 0 26px; padding-bottom:20px; border-bottom:1px solid var(--border)}
+h2{font-family:"Russo One",system-ui,sans-serif; font-weight:400; font-size:19px; margin:30px 0 9px; letter-spacing:.01em}
+h3{font-size:16.5px; font-weight:700; margin:20px 0 6px}
+p{margin:0 0 14px; color:#cdc9e8}
+ul,ol{margin:0 0 14px; padding-left:22px; color:#cdc9e8}
+li{margin-bottom:7px}
+strong{color:var(--text)}
+.card{background:linear-gradient(180deg,var(--card-2),var(--card)); border:1px solid var(--border);
+  border-radius:var(--r); padding:18px; margin:0 0 14px}
+.card p:last-child{margin-bottom:0}
+.note{border-left:3px solid var(--pink); background:rgba(255,46,126,.07); padding:13px 15px; border-radius:0 12px 12px 0; margin:0 0 20px}
+.note p{margin:0; font-size:14.5px}
+.place{color:var(--pink-2); font-weight:700}
+footer{border-top:1px solid var(--border); padding:22px 20px 40px; text-align:center; color:var(--faint); font-size:13px}
+footer nav{display:flex; flex-wrap:wrap; gap:6px 16px; justify-content:center; margin-bottom:12px}
+footer a{color:var(--muted); text-decoration:none; font-size:13.5px}
+footer a:hover{color:var(--text)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}

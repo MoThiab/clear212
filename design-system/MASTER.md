@@ -61,12 +61,22 @@ for large display text, fills and buttons, never for small body copy.
 
 ## Layout
 
-- Single column, `--maxw: 780px`, 18px gutters.
+- Single column, `--maxw: 780px`, 18px gutters (760px on the legal pages).
 - Mobile-first. Breakpoint at 420px collapses the stats grid and tightens the
   countdown.
 - Sticky bars (`search`, `overall` progress) use `top:10px` and `z-index` 5–6 so
   they never sit under a sticky browser chrome.
 - No horizontal scroll at 375px.
+
+## Shared assets
+
+- `assets/legal.css` — the five legal pages (privacy, terms, refunds, disclosure,
+  contact) share this instead of repeating the token block. Same variables, same
+  font stack, wider measure for long text.
+- `assets/favicon.svg` — the 212 mark, linked from every page.
+- The three product pages (index, answers, tracker) stay fully self-contained: no
+  shared JS, no shared CSS, only the two font requests from Google. That keeps
+  each one a single file you can drop on any host.
 
 ## Components
 
