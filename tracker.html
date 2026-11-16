@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>GTA VI Progress Tracker — Story, Side Jobs, Collectibles, Vehicles</title>
+<meta name="description" content="A free GTA VI progress tracker: tick off story missions, side jobs, collectibles and vehicles. Saves in your browser." />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Russo+One&display=swap" />
+<style>
+  :root{
+    --bg:#0b0a14; --card:#161430; --card-2:#1d1a42; --border:#2c2854;
+    --text:#ededf7; --muted:#a29ccb;    --faint:#9a94c0;
+    --pink:#ff2e7e; --pink-2:#ff5c9d; --cyan:#22d3ee; --violet:#7c3aed; --ok:#34d399;
+    --r:18px; --maxw:780px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:"Chakra Petch",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px; line-height:1.55; min-height:100vh; overflow-x:hidden;
+  }
+  body::before{
+    content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background:
+      radial-gradient(900px 520px at 10% -10%, rgba(124,58,237,.38), transparent 62%),
+      radial-gradient(820px 500px at 94% 2%,  rgba(255,46,126,.30), transparent 60%),
+      radial-gradient(760px 640px at 50% 110%, rgba(34,211,238,.18), transparent 64%);
+  }
+  body::after{
+    content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.5;
+    background-image:
+      linear-gradient(rgba(124,58,237,.15) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(124,58,237,.15) 1px,transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(130% 85% at 50% 0%,#000 0%,transparent 72%);
+            mask-image:radial-gradient(130% 85% at 50% 0%,#000 0%,transparent 72%);
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 18px}
+  .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 0 4px}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.06em; font-size:14px}
+  .brand .dot{width:10px;height:10px;border-radius:3px;background:linear-gradient(135deg,var(--pink),var(--violet));box-shadow:0 0 14px rgba(255,46,126,.7)}
+  .badge{font-size:12px; font-weight:600; color:var(--text); border:1px solid var(--border); border-radius:999px; padding:5px 11px; white-space:nowrap}
+
+  .hero{text-align:center; padding:26px 0 10px}
+  h1{
+    font-family:"Russo One",system-ui,sans-serif; font-weight:400;
+    font-size:clamp(28px,8.4vw,44px); line-height:1.05; margin:0 0 8px;
+    background:linear-gradient(100deg,#fff 5%,var(--pink-2) 45%,var(--violet) 80%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .sub{color:var(--muted); font-size:15px; max-width:520px; margin:0 auto}
+
+  /* overall bar */
+  .overall{background:linear-gradient(180deg,var(--card-2),var(--card)); border:1px solid var(--border); border-radius:var(--r); padding:18px; margin:22px 0 14px; position:sticky; top:10px; z-index:5; backdrop-filter:blur(8px); box-shadow:0 18px 40px -28px rgba(0,0,0,.95)}
+  .overall .row{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:10px}
+  .overall b{font-family:"Russo One",system-ui,sans-serif; font-weight:400; font-size:26px; font-variant-numeric:tabular-nums}
+  .overall span{font-size:13px; color:var(--muted)}
+  .bar{height:12px; border-radius:999px; background:rgba(11,10,20,.7); border:1px solid var(--border); overflow:hidden}
+  .bar i{display:block; height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg,var(--violet),var(--pink)); box-shadow:0 0 18px rgba(255,46,126,.6); transition:width .35s cubic-bezier(.2,.8,.2,1)}
+
+  section.card{background:linear-gradient(180deg,var(--card-2),var(--card)); border:1px solid var(--border); border-radius:var(--r); padding:18px; margin:14px 0}
+  .card h2{font-family:"Russo One",system-ui,sans-serif; font-weight:400; font-size:17px; margin:0 0 3px; display:flex; align-items:center; gap:9px}
+  .card h2 .ico{width:19px;height:19px;color:var(--cyan);flex:none}
+  .pct{font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums; margin-left:auto; font-family:"Chakra Petch",sans-serif}
+  .card .bar{margin:10px 0 14px}
+
+  .add{display:flex; gap:8px; margin-bottom:6px}
+  .add input{
+    flex:1; min-width:0; background:rgba(11,10,20,.7); color:var(--text);
+    border:1px solid var(--border); border-radius:12px; padding:12px 13px; font:inherit; font-size:15px;
+  }
+  .add input::placeholder{color:var(--faint)}
+  .add input:focus{outline:none; border-color:var(--pink); box-shadow:0 0 0 3px rgba(255,46,126,.18)}
+  .add button{
+    flex:none; border:1px solid rgba(255,46,126,.55); background:rgba(255,46,126,.14); color:var(--text);
+    border-radius:12px; padding:0 16px; font:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    transition:background .18s ease;
+  }
+  .add button:hover{background:rgba(255,46,126,.26)}
+  .add button:focus-visible{outline:3px solid var(--cyan); outline-offset:2px}
+
+  .item{display:flex; gap:10px; align-items:flex-start; padding:11px 0; border-top:1px solid var(--border)}
+  .item:first-of-type{border-top:0}
+  .item input[type=checkbox]{position:absolute; opacity:0; width:1px; height:1px}
+  .box{flex:none; width:25px; height:25px; margin-top:1px; border-radius:8px; border:2px solid var(--faint); display:grid; place-items:center; cursor:pointer; transition:background .18s ease,border-color .18s ease,transform .12s ease}
+  .box svg{width:14px;height:14px;color:#08131a; opacity:0; transform:scale(.5); transition:opacity .16s,transform .16s}
+  .item input:checked + .box{background:var(--ok); border-color:var(--ok); box-shadow:0 0 14px rgba(52,211,153,.45)}
+  .item input:checked + .box svg{opacity:1; transform:scale(1)}
+  .item input:focus-visible + .box{outline:3px solid var(--cyan); outline-offset:2px}
+  .item:active .box{transform:scale(.94)}
+  .body{flex:1; min-width:0}
+  .body .t{font-weight:600; font-size:15.5px; word-break:break-word}
+  .item input:checked ~ .body .t{color:var(--faint); text-decoration:line-through; text-decoration-color:rgba(255,46,126,.6)}
+  .body input[type=text]{
+    width:100%; margin-top:6px; background:rgba(11,10,20,.55); color:var(--muted);
+    border:1px solid transparent; border-radius:9px; padding:7px 9px; font:inherit; font-size:13.5px;
+  }
+  .body input[type=text]:focus{outline:none; border-color:var(--border); color:var(--text)}
+  .del{flex:none; border:0; background:transparent; color:var(--faint); cursor:pointer; padding:6px; border-radius:8px; line-height:0}
+  .del:hover{color:var(--pink); background:rgba(255,46,126,.1)}
+  .del:focus-visible{outline:3px solid var(--cyan); outline-offset:2px}
+  .del svg{width:17px;height:17px}
+
+  .empty{color:var(--faint); font-size:14px; padding:12px 0 4px; border-top:0}
+  .tools{display:flex; gap:8px; flex-wrap:wrap; margin-top:14px}
+  .tool{border:1px solid var(--border); background:rgba(124,58,237,.1); color:var(--muted); border-radius:11px; padding:9px 13px; font:inherit; font-size:13.5px; font-weight:600; cursor:pointer}
+  .tool:hover{color:var(--text); background:rgba(124,58,237,.2)}
+  .tool:focus-visible{outline:3px solid var(--cyan); outline-offset:2px}
+  .danger:hover{color:#fff; background:rgba(255,46,126,.22); border-color:rgba(255,46,126,.5)}
+
+  .cta{display:grid; gap:10px; margin:22px 0 8px}
+  .btn{display:flex; align-items:center; justify-content:center; gap:10px; min-height:54px; padding:14px 20px; border-radius:14px; text-decoration:none; font-weight:700; font-size:16px; border:1px solid transparent; transition:transform .14s ease, box-shadow .2s ease, background .2s ease}
+  .btn:active{transform:translateY(1px) scale(.995)}
+  .btn-primary{color:#120410; background:linear-gradient(100deg,var(--pink),var(--pink-2)); box-shadow:0 14px 34px -14px rgba(255,46,126,.85)}
+  .btn-ghost{color:var(--text); background:rgba(124,58,237,.12); border-color:rgba(124,58,237,.5)}
+  .btn:focus-visible{outline:3px solid var(--cyan); outline-offset:3px}
+
+  footer{color:var(--faint); font-size:13px; text-align:center; padding:24px 0 40px; line-height:1.7}
+  .warn{color:var(--pink-2); font-size:13px; margin-top:10px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand"><span class="dot" aria-hidden="true"></span> PROGRESS TRACKER</div>
+    <div class="badge">GTA VI · LEONIDA</div>
+  </div>
+
+  <header class="hero">
+    <h1>Track the run.</h1>
+    <p class="sub">Story missions, side jobs, collectibles and vehicles. Saved in this browser.</p>
+  </header>
+
+  <div class="overall">
+    <div class="row"><b id="overallPct">0%</b><span id="overallCount">0 of 0 done</span></div>
+    <div class="bar"><i id="overallBar"></i></div>
+    <div class="warn" id="saveWarn" hidden>This browser is blocking storage, so progress will reset when you leave. Bookmark the page and come back anyway.</div>
+  </div>
+
+  <main id="sections"></main>
+
+  <div class="tools">
+    <button class="tool" id="seedBtn" type="button">Load a starter list</button>
+    <button class="tool danger" id="resetBtn" type="button">Reset everything</button>
+  </div>
+
+  <nav class="cta">
+    <a class="btn btn-primary" href="answers.html">Day one answers</a>
+    <a class="btn btn-ghost" href="index.html">Launch countdown</a>
+  </nav>
+
+  <footer>
+    <p>Fan-made tool. Not affiliated with Rockstar Games or Take-Two Interactive. Progress never leaves your device.</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var SECTIONS = [
+    { id:'story',  name:'Story missions', icon:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5v13z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/>' },
+    { id:'side',   name:'Side jobs',      icon:'<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.1-2.1 2.7-2.5z"/>' },
+    { id:'collect',name:'Collectibles',   icon:'<path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.8 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2z"/>' },
+    { id:'vehicles',name:'Vehicles',      icon:'<path d="M5 11l1.6-4.2A2 2 0 0 1 8.5 5.5h7a2 2 0 0 1 1.9 1.3L19 11"/><path d="M3 11h18v6H3z"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="16.5" cy="17.5" r="1.8"/>' }
+  ];
+
+  var SEED = {
+    story:['Mission 1','Mission 2','Mission 3','Mission 4'],
+    side:['Side job 1','Side job 2','Side job 3'],
+    collect:['Collectible 1','Collectible 2','Collectible 3'],
+    vehicles:['First car','First bike']
+  };
+
+  var KEY = 'gta6-progress-v1';
+  var store = null;
+  var memory = {};
+
+  /* pick the best available storage; fall back to memory so the page still works */
+  try{ localStorage.setItem('__t','1'); localStorage.removeItem('__t'); store = localStorage; }catch(e){
+    try{ sessionStorage.setItem('__t','1'); sessionStorage.removeItem('__t'); store = sessionStorage; }
+    catch(e2){ store = null; }
+  }
+
+  var state = {};
+  function load(){
+    var raw = null;
+    if(store){ try{ raw = store.getItem(KEY); }catch(e){} }
+    if(!raw && memory.raw){ raw = memory.raw; }
+    if(raw){ try{ state = JSON.parse(raw); }catch(e){ state = {}; } }
+    SECTIONS.forEach(function(s){
+      if(!Array.isArray(state[s.id])) state[s.id] = [];
+    });
+  }
+  function save(){
+    var raw = JSON.stringify(state);
+    memory.raw = raw;
+    if(store){ try{ store.setItem(KEY, raw); }catch(e){} }
+    document.getElementById('saveWarn').hidden = !!store;
+  }
+  load();
+
+  var sectionsEl = document.getElementById('sections');
+
+  function pct(list){
+    if(!list.length) return 0;
+    var done = list.filter(function(i){ return i.done; }).length;
+    return Math.round(done / list.length * 100);
+  }
+
+  function renderOverall(){
+    var total = 0, done = 0;
+    SECTIONS.forEach(function(s){
+      total += state[s.id].length;
+      done += state[s.id].filter(function(i){ return i.done; }).length;
+    });
+    var p = total ? Math.round(done/total*100) : 0;
+    document.getElementById('overallPct').textContent = p + '%';
+    document.getElementById('overallCount').textContent = done + ' of ' + total + ' done';
+    document.getElementById('overallBar').style.width = p + '%';
+  }
+
+  function renderSection(sec){
+    var list = state[sec.id];
+    var card = document.createElement('section');
+    card.className = 'card';
+
+    var h = document.createElement('h2');
+    h.innerHTML = '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + sec.icon + '</svg>' +
+                  '<span>' + sec.name + '</span>' +
+                  '<span class="pct" data-pct>' + pct(list) + '%</span>';
+    card.appendChild(h);
+
+    var bar = document.createElement('div');
+    bar.className = 'bar';
+    bar.innerHTML = '<i style="width:' + pct(list) + '%"></i>';
+    card.appendChild(bar);
+
+    var add = document.createElement('div');
+    add.className = 'add';
+    add.innerHTML = '<input type="text" placeholder="Add an item…" aria-label="Add an item to ' + sec.name + '">' +
+                    '<button type="button">Add</button>';
+    card.appendChild(add);
+
+    var body = document.createElement('div');
+    body.className = 'items';
+    card.appendChild(body);
+
+    function draw(){
+      body.innerHTML = '';
+      if(!list.length){
+        var em = document.createElement('p');
+        em.className = 'empty';
+        em.textContent = 'Nothing here yet. Add your first item above.';
+        body.appendChild(em);
+      }
+      list.forEach(function(item, idx){
+        var row = document.createElement('div');
+        row.className = 'item';
+
+        var cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.id = sec.id + '-' + idx;
+        cb.checked = !!item.done;
+        cb.addEventListener('change', function(){
+          item.done = cb.checked; save(); update(card, sec, list); renderOverall();
+        });
+
+        var box = document.createElement('span');
+        box.className = 'box';
+        box.setAttribute('aria-hidden','true');
+        box.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+
+        var b = document.createElement('div');
+        b.className = 'body';
+        var t = document.createElement('div');
+        t.className = 't';
+        t.textContent = item.text;
+        var note = document.createElement('input');
+        note.type = 'text';
+        note.placeholder = 'Note (optional)';
+        note.value = item.note || '';
+        note.setAttribute('aria-label','Note for ' + item.text);
+        note.addEventListener('input', function(){ item.note = note.value; save(); });
+        b.appendChild(t); b.appendChild(note);
+
+        var del = document.createElement('button');
+        del.type = 'button';
+        del.className = 'del';
+        del.setAttribute('aria-label','Delete ' + item.text);
+        del.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>';
+        del.addEventListener('click', function(){
+          list.splice(idx,1); save(); draw(); update(card, sec, list); renderOverall();
+        });
+
+        row.appendChild(cb); row.appendChild(box); row.appendChild(b); row.appendChild(del);
+        body.appendChild(row);
+      });
+      var p = card.querySelector('[data-pct]');
+      if(p) p.textContent = pct(list) + '%';
+      var barI = card.querySelector('.bar i');
+      if(barI) barI.style.width = pct(list) + '%';
+    }
+
+    add.querySelector('button').addEventListener('click', function(){
+      var inp = add.querySelector('input');
+      var v = inp.value.trim();
+      if(!v) { inp.focus(); return; }
+      list.push({ text:v, done:false, note:'' });
+      inp.value = ''; save(); draw(); update(card, sec, list); renderOverall(); inp.focus();
+    });
+    add.querySelector('input').addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){ e.preventDefault(); add.querySelector('button').click(); }
+    });
+
+    function update(card, sec, list){
+      var p = card.querySelector('[data-pct]');
+      if(p) p.textContent = pct(list) + '%';
+      var barI = card.querySelector('.bar i');
+      if(barI) barI.style.width = pct(list) + '%';
+    }
+
+    draw();
+    sectionsEl.appendChild(card);
+  }
+
+  SECTIONS.forEach(renderSection);
+  renderOverall();
+  document.getElementById('saveWarn').hidden = !!store;
+
+  document.getElementById('seedBtn').addEventListener('click', function(){
+    SECTIONS.forEach(function(s){
+      SEED[s.id].forEach(function(name){
+        if(!state[s.id].some(function(i){ return i.text === name; })){
+          state[s.id].push({ text:name, done:false, note:'' });
+        }
+      });
+    });
+    save();
+    sectionsEl.innerHTML = '';
+    SECTIONS.forEach(renderSection);
+    renderOverall();
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    if(!confirm('Delete all progress on this device?')) return;
+    SECTIONS.forEach(function(s){ state[s.id] = []; });
+    save();
+    sectionsEl.innerHTML = '';
+    SECTIONS.forEach(renderSection);
+    renderOverall();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>GTA VI Day-One Answers — Every Launch-Night Question</title>
+<meta name="description" content="Straight answers to the GTA VI questions new players ask on launch night: release time, storage, preload, editions, crossplay, map size and more." />
+<meta name="theme-color" content="#0b0a14" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Russo+One&display=swap" />
+<style>
+  :root{
+    --bg:#0b0a14; --card:#161430; --card-2:#1d1a42; --border:#2c2854;
+    --text:#ededf7; --muted:#a29ccb;    --faint:#9a94c0;
+    --pink:#ff2e7e; --pink-2:#ff5c9d; --cyan:#22d3ee; --violet:#7c3aed; --ok:#34d399;
+    --r:18px; --maxw:780px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:"Chakra Petch",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    font-size:16px; line-height:1.55; min-height:100vh; overflow-x:hidden;
+  }
+  body::before{
+    content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background:
+      radial-gradient(900px 520px at 10% -10%, rgba(124,58,237,.38), transparent 62%),
+      radial-gradient(820px 500px at 94% 2%,  rgba(255,46,126,.30), transparent 60%),
+      radial-gradient(760px 640px at 50% 110%, rgba(34,211,238,.18), transparent 64%);
+  }
+  body::after{
+    content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.5;
+    background-image:
+      linear-gradient(rgba(124,58,237,.15) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(124,58,237,.15) 1px,transparent 1px);
+    background-size:46px 46px;
+    -webkit-mask-image:radial-gradient(130% 85% at 50% 0%,#000 0%,transparent 72%);
+            mask-image:radial-gradient(130% 85% at 50% 0%,#000 0%,transparent 72%);
+  }
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 18px}
+  .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 0 4px}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.06em; font-size:14px}
+  .brand .dot{width:10px;height:10px;border-radius:3px;background:linear-gradient(135deg,var(--pink),var(--violet));box-shadow:0 0 14px rgba(255,46,126,.7)}
+  .badge{font-size:12px; font-weight:600; color:var(--text); border:1px solid var(--border); border-radius:999px; padding:5px 11px; white-space:nowrap}
+
+  .hero{text-align:center; padding:26px 0 12px}
+  h1{
+    font-family:"Russo One",system-ui,sans-serif; font-weight:400;
+    font-size:clamp(28px,8.4vw,46px); line-height:1.05; margin:0 0 8px;
+    background:linear-gradient(100deg,#fff 5%,var(--pink-2) 45%,var(--violet) 80%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .sub{color:var(--muted); font-size:15px; max-width:560px; margin:0 auto}
+  .sub strong{color:var(--text)}
+
+  /* search */
+  .search{position:sticky; top:10px; z-index:6; margin:18px 0 6px}
+  .search .field{
+    display:flex; align-items:center; gap:11px;
+    background:linear-gradient(180deg,var(--card-2),var(--card));
+    border:1px solid var(--border); border-radius:16px; padding:4px 8px 4px 15px;
+    box-shadow:0 18px 40px -28px rgba(0,0,0,.95);
+  }
+  .search svg{width:20px;height:20px;color:var(--faint);flex:none}
+  .search input{
+    flex:1; min-width:0; background:transparent; border:0; color:var(--text);
+    font:inherit; font-size:16px; padding:13px 0; -webkit-appearance:none; appearance:none;
+  }
+  .search input::placeholder{color:var(--faint)}
+  .search input:focus{outline:none}
+  .search .field:focus-within{border-color:var(--pink); box-shadow:0 0 0 3px rgba(255,46,126,.18)}
+  .search .clear{
+    flex:none; border:0; background:rgba(124,58,237,.14); color:var(--muted);
+    width:38px; height:38px; border-radius:11px; font:inherit; font-size:17px; cursor:pointer;
+  }
+  .search .clear:hover{color:var(--text); background:rgba(124,58,237,.26)}
+  .count{color:var(--faint); font-size:13.5px; margin:10px 2px 4px; min-height:20px}
+  .count b{color:var(--muted)}
+
+  .card{
+    background:linear-gradient(180deg,var(--card-2),var(--card));
+    border:1px solid var(--border); border-radius:var(--r); padding:18px 18px 16px; margin:12px 0;
+    box-shadow:0 18px 40px -30px rgba(0,0,0,.95);
+  }
+  .card h2{font-family:"Russo One",system-ui,sans-serif; font-weight:400; font-size:17.5px; line-height:1.35; margin:0 0 9px; letter-spacing:.01em}
+  .card p{margin:0; color:#cdc9e8; font-size:15px}
+  .card p + p{margin-top:9px}
+  .meta{display:flex; flex-wrap:wrap; align-items:center; gap:8px 14px; margin-top:13px; padding-top:12px; border-top:1px solid var(--border); color:var(--faint); font-size:12.5px}
+  .meta .checked{display:inline-flex; align-items:center; gap:6px; color:var(--muted)}
+  .meta .checked svg{width:13px;height:13px;color:var(--ok)}
+  .meta .src{margin-left:auto; font-style:normal; color:var(--faint); text-align:right}
+
+  .plink{
+    display:inline-flex; align-items:center; gap:8px; margin-top:13px;
+    min-height:46px; padding:11px 16px; border-radius:12px; text-decoration:none;
+    font-weight:700; font-size:14.5px; color:#120410;
+    background:linear-gradient(100deg,var(--pink),var(--pink-2));
+    box-shadow:0 12px 28px -14px rgba(255,46,126,.9);
+    transition:transform .14s ease, box-shadow .2s ease;
+  }
+  .plink:active{transform:translateY(1px) scale(.99)}
+  .plink:focus-visible{outline:3px solid var(--cyan); outline-offset:3px}
+  .plink svg{width:15px;height:15px}
+  .tag{display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--cyan); border:1px solid rgba(34,211,238,.35); background:rgba(34,211,238,.07); padding:3px 8px; border-radius:999px; margin-bottom:9px}
+
+  .empty{color:var(--muted); text-align:center; padding:34px 10px; font-size:15px}
+  .empty b{color:var(--text)}
+
+  .cta{display:grid; gap:10px; margin:24px 0 8px}
+  .btn{display:flex; align-items:center; justify-content:center; gap:10px; min-height:54px; padding:14px 20px; border-radius:14px; text-decoration:none; font-weight:700; font-size:16px; border:1px solid transparent; transition:transform .14s ease, box-shadow .2s ease, background .2s ease}
+  .btn:active{transform:translateY(1px) scale(.995)}
+  .btn-primary{color:#120410; background:linear-gradient(100deg,var(--pink),var(--pink-2)); box-shadow:0 14px 34px -14px rgba(255,46,126,.85)}
+  .btn-ghost{color:var(--text); background:rgba(124,58,237,.12); border-color:rgba(124,58,237,.5)}
+  .btn:focus-visible{outline:3px solid var(--cyan); outline-offset:3px}
+
+  footer{color:var(--faint); font-size:13px; text-align:center; padding:24px 0 40px; line-height:1.75}
+  footer .disc{max-width:540px; margin:0 auto}
+  footer .disc strong{color:var(--muted)}
+  mark{background:rgba(255,46,126,.28); color:#fff; border-radius:4px; padding:0 2px}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand"><span class="dot" aria-hidden="true"></span> DAY-ONE ANSWERS</div>
+    <div class="badge">GTA VI · 19 NOV 2026</div>
+  </div>
+
+  <header class="hero">
+    <h1>Every question, answered.</h1>
+    <p class="sub">Checked against Rockstar, PlayStation and Xbox pages on <strong>16 November 2026</strong>. Search, then tap a product link if you still need the gear.</p>
+  </header>
+
+  <div class="search">
+    <label class="field" for="q">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Search a question — storage, preload, crossplay…" autocomplete="off" />
+      <button class="clear" id="clear" type="button" aria-label="Clear search" hidden>×</button>
+    </label>
+  </div>
+  <p class="count" id="count"></p>
+
+  <main id="list"></main>
+
+  <nav class="cta">
+    <a class="btn btn-primary" href="index.html">Launch countdown</a>
+    <a class="btn btn-ghost" href="tracker.html">Track your progress</a>
+  </nav>
+
+  <footer>
+    <p class="disc"><strong>Affiliate disclosure:</strong> some product links on this page are affiliate links. If you buy through them, the site earns a commission at no extra cost to you. Links are only shown where a product genuinely fits the answer.</p>
+    <p>Fan-made page. Not affiliated with, endorsed by, or sponsored by Rockstar Games or Take-Two Interactive. No Rockstar logos or artwork are used. Facts checked 16 November 2026.</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* =====================================================================
+     EDIT THIS FILE HERE
+     1. Add a question: push an object onto QA below.
+     2. Add your affiliate link: fill in `url` under PRODUCTS.
+        Leave `url` empty and no link is shown for that answer.
+     ===================================================================== */
+
+  var CHECKED = '16 Nov 2026';
+
+  var PRODUCTS = {
+    // url: ''  ->  no button is rendered until you paste a real affiliate link
+    ssd:       { label:'2TB NVMe SSD — make room for 212 GB', url:'' },
+    controller:{ label:'Extra wireless controller',           url:'' },
+    headset:   { label:'Wireless headset',                    url:'' },
+    capture:   { label:'Capture card for posting clips',      url:'' },
+    stand:     { label:'Controller charging stand',           url:'' }
+  };
+
+  var QA = [
+    { q:'When does GTA VI come out?',
+      a:'19 November 2026, on PlayStation 5 and Xbox Series X|S. It is not coming to PS4, and Xbox One only gets it through Xbox Cloud Gaming.',
+      src:'Rockstar Newswire' },
+
+    { q:'What time does it unlock on launch day?',
+      a:'Midnight local time, rolling around the globe from New Zealand. On PS5 each country unlocks as it reaches 19 November. In the US that is midnight Eastern, which is 9pm Pacific on 18 November. Xbox Cloud Gaming starts at 1am ET.',
+      src:'PlayStation Blog · Xbox Wire' },
+
+    { q:'How much storage space do I need?',
+      a:'Up to 212 GB for the preload, depending on your device — the UK Xbox store listed 209.86 GB. Add about 1 GB for the day-one update, so clear roughly 215 GB to be safe.',
+      src:'The Verge · Rockstar support',
+      product:'ssd' },
+
+    { q:'When can I pre-load the game?',
+      a:'Pre-loading opened on 10 November 2026, two days earlier than the 12 November date first announced. On PS5 it began at midnight local; on Xbox Series X|S at 12:00 AM GMT, which is 7pm ET / 4pm PT on 9 November.',
+      src:'TechPowerUp · Rockstar' },
+
+    { q:'How much does GTA VI cost?',
+      a:'$79.99 for the Standard Edition and $99.99 for the Ultimate Edition. Both are a straight purchase — no subscription is required to play.',
+      src:'Take-Two · USA Today' },
+
+    { q:'What do I get for pre-ordering?',
+      a:'The Vintage Vice City Pack: a ’55 Vapid Stanier and the Shore Court Garage, outfits and hairstyles for Jason and Lucia, an exclusive weapon pattern, and a free month of GTA+ on digital editions.',
+      src:'Vice · Dot Esports' },
+
+    { q:'What is the Ultimate Edition?',
+      a:'The $99.99 digital-only tier, sitting $20 above Standard. Rockstar’s store page lists its extras, and it has been outselling the Standard Edition in pre-orders.',
+      src:'Dot Esports · Vice' },
+
+    { q:'Is GTA VI on Game Pass?',
+      a:'No. It is not in the Game Pass catalogue at launch and Rockstar has announced no plan to add it. Anyone playing on day one buys the game outright.',
+      src:'TalkEsport · Rockstar' },
+
+    { q:'Is there crossplay?',
+      a:'No. GTA VI is a single-player experience at launch, so there is no shared online world between PS5 and Xbox. Cross-progression has not been announced either.',
+      src:'PlayStation · Xbox listings' },
+
+    { q:'Is there multiplayer or GTA Online at launch?',
+      a:'No. Rockstar describes GTA VI as a single-player game. A multiplayer version is expected in 2027, according to a Bloomberg report and the Twitch CEO.',
+      src:'Bloomberg · The Verge' },
+
+    { q:'Will it come to PC?',
+      a:'Not at launch. Rockstar and Take-Two have announced no PC date, though Take-Two’s CEO has said PC is becoming more important to the company. Expect it later than the console launch.',
+      src:'The Verge · GamesRadar' },
+
+    { q:'Can I play on PS4 or Xbox One?',
+      a:'Not on PS4 at all. On Xbox One you can play through Xbox Cloud Gaming from 1am ET on 19 November, using Xbox Series S graphics settings. PS5 owners also get Remote Play to other devices.',
+      src:'Xbox Wire · PlayStation' },
+
+    { q:'What frame rate does it run at?',
+      a:'Rockstar targets 30 frames per second on every console. The PS5 Pro adds PSSR upscaling and ray-traced shadows on top; the base PS5 and Xbox Series X|S stay at 30.',
+      src:'The Verge · GameSpot' },
+
+    { q:'How big is the map?',
+      a:'Leonida is about twice the size of GTA V’s map and three times Red Dead Redemption 2’s. Vice City itself is twice the size of Los Santos, and the suburbs are about eleven times Los Santos and its surroundings.',
+      src:'Edge · ScreenRant' },
+
+    { q:'Who are the main characters?',
+      a:'Jason and Lucia, a pair who end up on the wrong side of a criminal conspiracy across Leonida after an easy score goes wrong.',
+      src:'Xbox · Rockstar' },
+
+    { q:'Can I play offline?',
+      a:'Yes. The PlayStation store listing marks offline play as enabled, alongside a single-player mode and no online multiplayer at launch.',
+      src:'PlayStation' },
+
+    { q:'How many people pre-ordered it?',
+      a:'It is the most pre-ordered title in PlayStation Store history and the most pre-ordered game ever on the Microsoft Store, with several million copies reported before launch.',
+      src:'PlayStation Blog · Xbox Wire' },
+
+    { q:'I want to post clips online. How do I record them?',
+      a:'On PS5 use the Create button on the DualSense; on Xbox use the Share button on the controller. Both save a clip of the last stretch of play without extra hardware, and a capture card is only needed if you want longer, higher-quality recordings from a console.',
+      src:'PlayStation · Xbox',
+      product:'capture' },
+
+    { q:'What do I need to be ready on the day?',
+      a:'A PS5 or Xbox Series X|S, about 215 GB of free space, the game pre-loaded, and your store account signed in. Charge a spare controller and a headset the night before.',
+      src:'This page',
+      product:'controller' }
+  ];
+
+  /* ---------------- render ---------------- */
+
+  var list = document.getElementById('list');
+  var input = document.getElementById('q');
+  var clearBtn = document.getElementById('clear');
+  var count = document.getElementById('count');
+  var nodes = [];
+
+  function el(tag, cls){
+    var e = document.createElement(tag);
+    if(cls) e.className = cls;
+    return e;
+  }
+
+  QA.forEach(function(item, i){
+    var card = el('article', 'card');
+    card.id = 'a' + i;
+
+    var tag = el('span', 'tag');
+    tag.textContent = 'Answer ' + (i + 1);
+    card.appendChild(tag);
+
+    var h = el('h2');
+    h.textContent = item.q;
+    card.appendChild(h);
+
+    var p = el('p');
+    p.textContent = item.a;
+    card.appendChild(p);
+
+    var meta = el('div', 'meta');
+    var c = el('span', 'checked');
+    c.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>';
+    var ct = document.createElement('span');
+    ct.textContent = 'Checked ' + CHECKED;
+    c.appendChild(ct);
+    meta.appendChild(c);
+
+    var s = el('span', 'src');
+    s.textContent = 'Source: ' + item.src;
+    meta.appendChild(s);
+    card.appendChild(meta);
+
+    if(item.product && PRODUCTS[item.product] && PRODUCTS[item.product].url){
+      var prod = PRODUCTS[item.product];
+      var a = el('a', 'plink');
+      a.href = prod.url;
+      a.rel = 'sponsored nofollow noopener';
+      a.target = '_blank';
+      a.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+      var at = document.createElement('span');
+      at.textContent = prod.label;
+      a.appendChild(at);
+      card.appendChild(a);
+    }
+
+    list.appendChild(card);
+    nodes.push({ el:card, text:(item.q + ' ' + item.a + ' ' + item.src).toLowerCase() });
+  });
+
+  function apply(){
+    var v = input.value.trim().toLowerCase();
+    var shown = 0;
+    nodes.forEach(function(n){
+      var hit = !v || n.text.indexOf(v) !== -1;
+      n.el.hidden = !hit;
+      if(hit) shown++;
+    });
+    clearBtn.hidden = !v;
+    if(!v){
+      count.innerHTML = '';
+    } else if(shown === 0){
+      count.innerHTML = '';
+      var e = el('div', 'empty');
+      e.innerHTML = '<b>No answers match.</b><br>Try a shorter word — “storage”, “time”, “PC”.';
+      e.id = 'emptyState';
+      list.appendChild(e);
+    } else {
+      var old = document.getElementById('emptyState');
+      if(old) old.remove();
+      count.innerHTML = 'Showing <b>' + shown + '</b> of ' + QA.length + ' answers';
+    }
+  }
+
+  input.addEventListener('input', function(){
+    var e = document.getElementById('emptyState');
+    if(e) e.remove();
+    apply();
+  });
+  clearBtn.addEventListener('click', function(){ input.value = ''; apply(); input.focus(); });
+
+  apply();
+})();
+</script>
+</body>
+</html>
