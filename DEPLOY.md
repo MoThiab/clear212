@@ -8,41 +8,35 @@ Target URL: **https://clear212.mo-automation.com**
 
 ---
 
-## Path A — Vercel CLI (recommended)
+## Automatic — this is how it works now
 
-One-time setup, about two minutes:
+The repository is connected to Vercel through Git, so **every push to `main`
+deploys itself**. There is nothing to run locally.
 
 ```bash
 cd "I:/AI Projs/GTA6_Rich"
-
-# 1. Log in once. Opens the browser — pick the mo-automation team.
-npx --yes vercel login
-
-# 2. First deploy. Vercel asks whether to create a new project — say yes,
-#    name it "clear212", scope = your mo-automation team.
-npx --yes vercel --prod
+git add -A
+git commit -m "..."
+git push          # that is the whole deploy
 ```
 
-After that, every update is one command:
+Production: `main` → `https://clear212.mo-automation.com`
+Preview: every other branch and pull request gets its own `*.vercel.app` URL.
+
+## Manual override (rarely needed)
 
 ```bash
 npx --yes vercel --prod
 ```
 
-## Path B — Vercel dashboard
+Only if a push did not trigger a build. If that starts happening repeatedly, the
+Git connection has dropped — reconnect it under **Settings → Git** on the
+`clear212` project.
 
-Import the git repository (`I:/AI Projs/GTA6_Rich`) into a new Vercel project, or
-drag the folder onto the Vercel deploy page. Nothing to configure — Vercel detects
-a static site.
+## Domain
 
-## Add the domain
-
-Vercel dashboard → project **clear212** → Settings → Domains → add
-`clear212.mo-automation.com`.
-
-Vercel will ask for a CNAME at the DNS host. `mo-automation.com` already resolves to
-Vercel's network, so verification should be quick. Until the domain is added, the
-site is live on the automatic `*.vercel.app` URL.
+Already done: `clear212.mo-automation.com` points at this project.
+Vercel dashboard → project **clear212** → Settings → Domains.
 
 ## Notes
 
@@ -57,7 +51,5 @@ site is live on the automatic `*.vercel.app` URL.
 
 | Item | Where | Status |
 |---|---|---|
-| Vercel login + project | your machine | needed once |
-| Domain `clear212.mo-automation.com` | Vercel dashboard | not added yet (DNS does not resolve) |
 | Affiliate URLs | `answers.html` → `PRODUCTS` | empty |
 | Formspree endpoint for launch emails | `index.html` → `FORMSPREE_ENDPOINT` | empty — **do not reuse Qabda's form**, it would mix a GTA audience into the Qabda list |
