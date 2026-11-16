@@ -74,6 +74,8 @@ for large display text, fills and buttons, never for small body copy.
   contact) share this instead of repeating the token block. Same variables, same
   font stack, wider measure for long text.
 - `assets/favicon.svg` — the 212 mark, linked from every page.
+- `assets/og.png` — the 1200×630 Open Graph / Twitter card, referenced by every
+  page's social meta tags.
 - The three product pages (index, answers, tracker) stay fully self-contained: no
   shared JS, no shared CSS, only the two font requests from Google. That keeps
   each one a single file you can drop on any host.

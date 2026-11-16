@@ -22,6 +22,9 @@ Rockstar logos or artwork are used.
 | `contact.html` | Contact page — corrections, refunds, takedowns. | Replace `[YOUR EMAIL]`. |
 | `assets/legal.css` | Shared styles for the five legal pages. | Nothing. |
 | `assets/favicon.svg` | Site icon — the 212 mark. | Nothing. |
+| `assets/og.png` | 1200×630 social share card, referenced by the Open Graph tags. | Regenerate with `python scripts/make_og.py`. |
+| `llms.txt` | Machine-readable site summary for AI answer engines (ChatGPT, Perplexity, Claude, Gemini). | Keep the facts current. |
+| `scripts/` | One-off generators: `make_og.py`, `seo.mjs` (head block + JSON-LD), `sources.mjs` (source links). | Re-run `node scripts/seo.mjs` after adding a page. |
 | `growth-plan.md` | Name options, market reality, attraction channels, the money ladder, the seven-day plan. | A decision on the name. |
 | `caption-kit.md` | The X caption prompt, a worked example, X eligibility rules, affiliate math. | Nothing. |
 | `briefing/` | The daily morning briefing: prompt, output template, and the cron job that runs it. | Nothing to build; it runs daily. |
@@ -65,6 +68,34 @@ and buys nothing the content does not already deliver. Full reasoning in
 `design-system/MASTER.md`.
 
 ---
+
+## Discovery: SEO, AEO, GEO
+
+In place on every page:
+
+- **Canonical URL**, robots meta (`index, follow`), Open Graph and Twitter Card tags.
+- **JSON-LD**: `WebSite` + `Organization` on the home page, `FAQPage` on both answers
+  pages (19 questions each), `WebPage` elsewhere.
+- **`hreflang`** between the English and Arabic answers pages, with `x-default`.
+- **`sitemap.xml`** (clean URLs, hreflang alternates) and **`robots.txt`**.
+- **`llms.txt`** at the root — the machine-readable summary AI crawlers read first.
+- **AI crawlers explicitly allowed** in `robots.txt`: GPTBot, PerplexityBot,
+  ClaudeBot, anthropic-ai, Google-Extended, Applebot-Extended, cohere-ai.
+  Blocking one zeroes that platform, so check there first if citations drop.
+- Every answer carries a **named source linked to the original article**, plus a
+  `<time datetime>` stamp for the check date — the two signals answer engines
+  weight most.
+
+Not done, and why:
+
+- **No analytics.** Nothing is measured yet. A privacy-friendly counter
+  (Plausible / GoatCounter) would show which answers actually get searched.
+- **No Search Console or Bing Webmaster verification** — those need your accounts.
+- **No backlinks yet.** The channels in `growth-plan.md` are what build them.
+- **One shared social card**, not per page — the pages have no unique artwork and
+  Rockstar assets are off limits.
+
+Regenerate after adding a page: `node scripts/seo.mjs`.
 
 ## The money, honestly
 

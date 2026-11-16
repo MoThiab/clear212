@@ -1,0 +1,32 @@
+# Clear212
+
+> Fan-made GTA VI launch hub: live countdown to 19 November 2026, a day-one readiness checklist, a progress tracker, and sourced answers to the questions new players ask. English and العربية.
+
+## Docs
+
+- [Launch countdown](https://clear212.mo-automation.com/): Live countdown to the GTA VI unlock at midnight local time on 19 November 2026, a tickable day-one checklist, and the launch facts — price, storage, preload and platforms.
+- [Day-one answers](https://clear212.mo-automation.com/answers): Nineteen sourced answers to launch-night questions: release time, 212 GB storage, preload timing, editions, crossplay, multiplayer, PC, frame rate, map size and pre-order bonuses.
+- [إجابات GTA VI (العربية)](https://clear212.mo-automation.com/ar/answers): The same nineteen answers in Arabic, written for the MENA launch audience rather than translated.
+- [Progress tracker](https://clear212.mo-automation.com/tracker): Free browser-based tracker for story missions, side jobs, collectibles and vehicles, with per-section and overall completion bars. Nothing leaves the device.
+
+## Key Facts
+
+- GTA VI launches 19 November 2026 on PlayStation 5 and Xbox Series X|S, at $79.99 (Standard) and $99.99 (Ultimate).
+- The preload needs up to 212 GB depending on device, and opened 10 November 2026.
+- GTA VI is a single-player experience at launch; a multiplayer version is expected in 2027.
+- It is not on Game Pass, has no crossplay, and is not on PS4, Xbox One (except cloud) or PC at launch.
+- Leonida is roughly twice the size of GTA V's map and three times Red Dead Redemption 2's.
+- Clear212 is an unofficial fan site. It is not affiliated with, endorsed by, or sponsored by Rockstar Games or Take-Two Interactive.
+- Facts on this site were last checked on 16 November 2026 and are dated on every answer.
+
+## Legal
+
+- [Privacy Policy](https://clear212.mo-automation.com/privacy): What is collected, what stays on the visitor's device, affiliate cookies and the email list.
+- [Terms of Use](https://clear212.mo-automation.com/terms): Fan-site and trademark notice, accuracy disclaimer and liability limits.
+- [Refund Policy](https://clear212.mo-automation.com/refunds): The site is free; the terms that would apply to any digital product, and why affiliate purchases are the retailer's contract.
+- [Affiliate Disclosure](https://clear212.mo-automation.com/disclosure): Which links pay a commission, what it costs the buyer, and the Amazon Associates statement.
+
+## Contact
+
+- Website: https://clear212.mo-automation.com
+- Email: hello@mo-automation.com
