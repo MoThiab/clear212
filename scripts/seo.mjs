@@ -33,7 +33,18 @@ const LANG_JS = '<script>(function(){var p=location.pathname.replace(/\\/+$/,"")
   + 'var other=isAr?(p.replace(/^\\/ar/,"")||"/"):("/ar"+(p==="/"?"/":p));'
   + 'var b=document.getElementById("langBtn");if(!b)return;'
   + 'b.textContent=isAr?"English":"العربية";'
-  + 'b.addEventListener("click",function(){location.href=other+(location.search||"")+location.hash;});})();<\/script>';
+  + 'b.addEventListener("click",function(){try{localStorage.setItem("clear212-lang",isAr?"en":"ar");}catch(e){}'
+  + 'location.href=other+(location.search||"")+location.hash;});})();<\/script>';
+
+/* Remember the choice: runs in <head> before first paint, so a visitor who picked
+   Arabic is served the Arabic page instead of being handed English again. */
+const LANG_REDIRECT = '<script>(function(){try{'
+  + 'var p=location.pathname.replace(/\\/+$/,"")||"/";'
+  + 'var cur=p.indexOf("/ar")===0?"ar":"en";'
+  + 'var want=localStorage.getItem("clear212-lang");'
+  + 'if(want&&want!==cur){var other=cur==="ar"?(p.replace(/^\\/ar/,"")||"/"):("/ar"+(p==="/"?"/":p));'
+  + 'location.replace(other+location.search+location.hash);}'
+  + '}catch(e){}})();<\/script>';
 
 /** url, type, locale, and which JSON-LD to emit */
 const PAGES = {
@@ -158,6 +169,7 @@ function headBlock(page, title, desc, ld) {
   ];
   if (ld) lines.push(`<script type="application/ld+json">${JSON.stringify(ld)}</script>`);
   lines.push(`<style>${LANG_CSS}</style>`);
+  lines.push(LANG_REDIRECT);
   return `<!-- seo:start -->\n${lines.join('\n')}\n<!-- seo:end -->`;
 }
 
