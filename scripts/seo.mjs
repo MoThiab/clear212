@@ -19,6 +19,9 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DOMAIN = 'https://clear212.mo-automation.com';
 const IMG = `${DOMAIN}/assets/og.png`;
 
+/** Google Search Console verification token (public by design — it ships in the page source). */
+const VERIFY = 'i3YwDaanTeyLT4FPCARVnraCQaX7D1qbjI42oHGEkWk';
+
 /** url, type, locale, and which JSON-LD to emit */
 const PAGES = {
   'index.html': { url: '/', type: 'website', locale: 'en_US', ld: 'website' },
@@ -115,6 +118,7 @@ function headBlock(page, title, desc, ld) {
 
   const lines = [
     '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">',
+    `<meta name="google-site-verification" content="${VERIFY}">`,
     `<link rel="canonical" href="${url}">`,
     '<meta property="og:site_name" content="Clear212">',
     `<meta property="og:type" content="${page.type}">`,

@@ -79,6 +79,8 @@ In place on every page:
 - **`hreflang`** between the English and Arabic answers pages, with `x-default`.
 - **`sitemap.xml`** (clean URLs, hreflang alternates) and **`robots.txt`**.
 - **`llms.txt`** at the root — the machine-readable summary AI crawlers read first.
+- **Google Search Console verification** tag, generated from `VERIFY` in
+  `scripts/seo.mjs` and present on every page.
 - **AI crawlers explicitly allowed** in `robots.txt`: GPTBot, PerplexityBot,
   ClaudeBot, anthropic-ai, Google-Extended, Applebot-Extended, cohere-ai.
   Blocking one zeroes that platform, so check there first if citations drop.
