@@ -200,7 +200,7 @@
 
   <div class="topbar">
     <div class="brand"><span class="dot" aria-hidden="true"></span> LAUNCH NIGHT</div>
-    <button class="langbtn" id="langBtn" type="button"></button>
+  <button class="langbtn" id="langBtn" type="button"></button>
   <div class="badge">19 NOV 2026 · PS5 / XBOX SERIES X|S</div>
   </div>
 
@@ -421,6 +421,7 @@
   }
 })();
 </script>
-<script>(function(){var p=location.pathname.replace(/\/+$/,"")||"/";var isAr=p.indexOf("/ar")===0;var other=isAr?(p.replace(/^\/ar/,"")||"/"):("/ar"+(p==="/"?"/":p));var b=document.getElementById("langBtn");if(!b)return;b.textContent=isAr?"English":"العربية";b.addEventListener("click",function(){location.href=other+(location.search||"")+location.hash;});})();</script>
+
+<script>(function(){var p=location.pathname.replace(/\/+$/,"")||"/";var isAr=p.indexOf("/ar")===0;var other=isAr?(p.replace(/^\/ar/,"")||"/"):("/ar"+(p==="/"?"/":p));var b=document.getElementById("langBtn");if(!b)return;b.textContent=isAr?"English":"العربية";b.addEventListener("click",function(){try{localStorage.setItem("clear212-lang",isAr?"en":"ar");}catch(e){}location.href=other+(location.search||"")+location.hash;});})();</script>
 </body>
 </html>

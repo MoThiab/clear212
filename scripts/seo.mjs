@@ -194,11 +194,11 @@ for (const [file, page] of Object.entries(PAGES)) {
   if (!html.includes(anchor)) throw new Error(`anchor not found in ${file}`);
   html = html.replace(anchor, `${anchor}\n${headBlock(page, title, desc, ld)}`);
 
-  /* language switch button + its behaviour */
-  if (!html.includes('id="langBtn"')) {
-    html = html.replace(/<div class="badge"/, `${LANG_BTN}\n  <div class="badge"`);
-    html = html.replace('</body>', `${LANG_JS}\n</body>`);
-  }
+  /* language switch button + its behaviour — always replace, so edits land */
+  html = html.replace(/[ \t]*<button class="langbtn" id="langBtn" type="button"><\/button>\n?/g, '');
+  html = html.replace(/<script>\(function\(\)\{var p=location\.pathname[\s\S]*?<\/script>/g, '');
+  html = html.replace(/<div class="badge"/, `${LANG_BTN}\n  <div class="badge"`);
+  html = html.replace('</body>', `${LANG_JS}\n</body>`);
 
   /* the button replaces the old footer text link, so drop it */
   if (file.startsWith('ar/')) {
