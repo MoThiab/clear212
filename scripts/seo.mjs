@@ -22,6 +22,19 @@ const IMG = `${DOMAIN}/assets/og.png`;
 /** Google Search Console verification token (public by design — it ships in the page source). */
 const VERIFY = 'i3YwDaanTeyLT4FPCARVnraCQaX7D1qbjI42oHGEkWk';
 
+/* Language switch: one button in the top bar, on every page, pointing at the
+   same path in the other language. */
+const LANG_CSS = '.langbtn{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:7px 14px;border-radius:999px;border:1px solid var(--border);background:rgba(124,58,237,.14);color:var(--text);font-family:"Chakra Petch","Noto Kufi Arabic",system-ui,sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;transition:background .18s ease}'
+  + '.langbtn:hover{background:rgba(124,58,237,.26)}'
+  + '.langbtn:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}'
+  + '.topbar .badge{margin-inline-start:auto}';
+const LANG_BTN = '<button class="langbtn" id="langBtn" type="button"></button>';
+const LANG_JS = '<script>(function(){var p=location.pathname.replace(/\\/+$/,"")||"/";var isAr=p.indexOf("/ar")===0;'
+  + 'var other=isAr?(p.replace(/^\\/ar/,"")||"/"):("/ar"+(p==="/"?"/":p));'
+  + 'var b=document.getElementById("langBtn");if(!b)return;'
+  + 'b.textContent=isAr?"English":"العربية";'
+  + 'b.addEventListener("click",function(){location.href=other+(location.search||"")+location.hash;});})();<\/script>';
+
 /** url, type, locale, and which JSON-LD to emit */
 const PAGES = {
   'index.html': { url: '/', type: 'website', locale: 'en_US', ld: 'website' },
@@ -35,6 +48,11 @@ const PAGES = {
   'refunds.html': { url: '/refunds', type: 'website', locale: 'en_US', ld: 'webpage' },
   'disclosure.html': { url: '/disclosure', type: 'website', locale: 'en_US', ld: 'webpage' },
   'contact.html': { url: '/contact', type: 'website', locale: 'en_US', ld: 'webpage' },
+  'ar/privacy.html': { url: '/ar/privacy', type: 'website', locale: 'ar_AR', ld: 'webpage' },
+  'ar/terms.html': { url: '/ar/terms', type: 'website', locale: 'ar_AR', ld: 'webpage' },
+  'ar/refunds.html': { url: '/ar/refunds', type: 'website', locale: 'ar_AR', ld: 'webpage' },
+  'ar/disclosure.html': { url: '/ar/disclosure', type: 'website', locale: 'ar_AR', ld: 'webpage' },
+  'ar/contact.html': { url: '/ar/contact', type: 'website', locale: 'ar_AR', ld: 'webpage' },
 };
 
 const decode = (s) => String(s)
@@ -139,6 +157,7 @@ function headBlock(page, title, desc, ld) {
     `<meta name="twitter:image" content="${IMG}">`,
   ];
   if (ld) lines.push(`<script type="application/ld+json">${JSON.stringify(ld)}</script>`);
+  lines.push(`<style>${LANG_CSS}</style>`);
   return `<!-- seo:start -->\n${lines.join('\n')}\n<!-- seo:end -->`;
 }
 
@@ -162,6 +181,17 @@ for (const [file, page] of Object.entries(PAGES)) {
   const anchor = '<meta name="theme-color" content="#0b0a14" />';
   if (!html.includes(anchor)) throw new Error(`anchor not found in ${file}`);
   html = html.replace(anchor, `${anchor}\n${headBlock(page, title, desc, ld)}`);
+
+  /* language switch button + its behaviour */
+  if (!html.includes('id="langBtn"')) {
+    html = html.replace(/<div class="badge"/, `${LANG_BTN}\n  <div class="badge"`);
+    html = html.replace('</body>', `${LANG_JS}\n</body>`);
+  }
+
+  /* the button replaces the old footer text link, so drop it */
+  if (file.startsWith('ar/')) {
+    html = html.replace(/[ \t]*<a href="\.\.\/(index|tracker|answers)\.html">English<\/a>\n?/g, '');
+  }
 
   fs.writeFileSync(full, html);
   console.log(`injected: ${file}  (ld=${page.ld}${QA ? `, ${QA.length} Q&A` : ''})`);

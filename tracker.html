@@ -26,7 +26,9 @@
 <meta name="twitter:description" content="A free GTA VI progress tracker: tick off story missions, side jobs, collectibles and vehicles. Saves in your browser.">
 <meta name="twitter:image" content="https://clear212.mo-automation.com/assets/og.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"GTA VI Progress Tracker — Story, Side Jobs, Collectibles, Vehicles","description":"A free GTA VI progress tracker: tick off story missions, side jobs, collectibles and vehicles. Saves in your browser.","url":"https://clear212.mo-automation.com/tracker","inLanguage":"en","isPartOf":{"@id":"https://clear212.mo-automation.com/#website"}}</script>
+<style>.langbtn{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:7px 14px;border-radius:999px;border:1px solid var(--border);background:rgba(124,58,237,.14);color:var(--text);font-family:"Chakra Petch","Noto Kufi Arabic",system-ui,sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;transition:background .18s ease}.langbtn:hover{background:rgba(124,58,237,.26)}.langbtn:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}.topbar .badge{margin-inline-start:auto}</style>
 <!-- seo:end -->
+
 
 
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -160,7 +162,8 @@
 
   <div class="topbar">
     <div class="brand"><span class="dot" aria-hidden="true"></span> PROGRESS TRACKER</div>
-    <div class="badge">GTA VI · LEONIDA</div>
+    <button class="langbtn" id="langBtn" type="button"></button>
+  <div class="badge">GTA VI · LEONIDA</div>
   </div>
 
   <header class="hero">
@@ -397,5 +400,6 @@
   });
 })();
 </script>
+<script>(function(){var p=location.pathname.replace(/\/+$/,"")||"/";var isAr=p.indexOf("/ar")===0;var other=isAr?(p.replace(/^\/ar/,"")||"/"):("/ar"+(p==="/"?"/":p));var b=document.getElementById("langBtn");if(!b)return;b.textContent=isAr?"English":"العربية";b.addEventListener("click",function(){location.href=other+(location.search||"")+location.hash;});})();</script>
 </body>
 </html>

@@ -26,6 +26,7 @@
 <meta name="twitter:description" content="Terms of use for Clear212, a fan-made GTA VI launch hub: no affiliation with Rockstar Games, trademark notice, disclaimer and liability.">
 <meta name="twitter:image" content="https://clear212.mo-automation.com/assets/og.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Terms of Use — Clear212","description":"Terms of use for Clear212, a fan-made GTA VI launch hub: no affiliation with Rockstar Games, trademark notice, disclaimer and liability.","url":"https://clear212.mo-automation.com/terms","inLanguage":"en","isPartOf":{"@id":"https://clear212.mo-automation.com/#website"}}</script>
+<style>.langbtn{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:7px 14px;border-radius:999px;border:1px solid var(--border);background:rgba(124,58,237,.14);color:var(--text);font-family:"Chakra Petch","Noto Kufi Arabic",system-ui,sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;transition:background .18s ease}.langbtn:hover{background:rgba(124,58,237,.26)}.langbtn:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}.topbar .badge{margin-inline-start:auto}</style>
 <!-- seo:end -->
 
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -37,6 +38,7 @@
 
 <div class="topbar">
   <a class="brand" href="index.html"><span class="dot" aria-hidden="true"></span> CLEAR212</a>
+  <button class="langbtn" id="langBtn" type="button"></button>
   <div class="badge">GTA VI · 19 NOV 2026</div>
 </div>
 
@@ -115,5 +117,6 @@
   <p>Fan-made site. Not affiliated with Rockstar Games or Take-Two Interactive.</p>
 </footer>
 
+<script>(function(){var p=location.pathname.replace(/\/+$/,"")||"/";var isAr=p.indexOf("/ar")===0;var other=isAr?(p.replace(/^\/ar/,"")||"/"):("/ar"+(p==="/"?"/":p));var b=document.getElementById("langBtn");if(!b)return;b.textContent=isAr?"English":"العربية";b.addEventListener("click",function(){location.href=other+(location.search||"")+location.hash;});})();</script>
 </body>
 </html>

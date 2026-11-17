@@ -52,3 +52,17 @@ footer nav{display:flex; flex-wrap:wrap; gap:6px 16px; justify-content:center; m
 footer a{color:var(--muted); text-decoration:none; font-size:13.5px}
 footer a:hover{color:var(--text)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+
+/* ---------- RTL / Arabic ---------- */
+[dir="rtl"] body{font-family:"Chakra Petch","Noto Kufi Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+[dir="rtl"] h1{font-family:"Chakra Petch","Noto Kufi Arabic",system-ui,sans-serif; font-weight:700}
+[dir="rtl"] h2{font-family:"Chakra Petch","Noto Kufi Arabic",system-ui,sans-serif}
+[dir="rtl"] .kicker{letter-spacing:.02em}
+[dir="rtl"] .note{border-left:0; border-right:3px solid var(--pink); border-radius:12px 0 0 12px}
+[dir="rtl"] .place{font-family:"Chakra Petch",sans-serif}
+
+/* language switch button (injected into .topbar by scripts/seo.mjs) */
+.langbtn{display:inline-flex; align-items:center; gap:7px; min-height:38px; padding:7px 14px; border-radius:999px; border:1px solid var(--border); background:rgba(124,58,237,.14); color:var(--text); font-family:"Chakra Petch","Noto Kufi Arabic",system-ui,sans-serif; font-size:13.5px; font-weight:600; cursor:pointer; transition:background .18s ease}
+.langbtn:hover{background:rgba(124,58,237,.26)}
+.langbtn:focus-visible{outline:3px solid var(--cyan); outline-offset:2px}
+.topbar .badge{margin-inline-start:auto}
