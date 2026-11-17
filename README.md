@@ -15,6 +15,9 @@ Rockstar logos or artwork are used.
 | `index.html` | Countdown page. Local-time countdown, day-one checklist (saved), launch facts, optional email capture. | A Formspree endpoint (optional — the card stays hidden until you set `FORMSPREE_ENDPOINT`). |
 | `answers.html` | The answers page. 19 searched Q&As with sources and a product-link slot each. | Affiliate URLs (optional — links stay hidden until you add them). |
 | `tracker.html` | Progress tracker. Story / side jobs / collectibles / vehicles, per-section and overall bars, saved in the browser. | Nothing. |
+| `ar/index.html` | Arabic (RTL) countdown — the MENA front door, with the same checklist, facts and optional email slot. | Nothing. |
+| `ar/answers.html` | Arabic (RTL) answers — the same 19 Q&As and the same sources, written natively in Shami-leaning Arabic. | Nothing. |
+| `ar/tracker.html` | Arabic (RTL) progress tracker. | Nothing. |
 | `privacy.html` | Privacy policy. Device storage, affiliate cookies, email, analytics stance. | Replace `[YOUR EMAIL]`. |
 | `terms.html` | Terms of use. Fan-site and trademark notice, disclaimer, liability. | Replace `[YOUR EMAIL]`. |
 | `refunds.html` | Refund policy. Free today; 14-day terms if a digital product is added. | Nothing. |
