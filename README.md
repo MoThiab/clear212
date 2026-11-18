@@ -126,18 +126,19 @@ Do not re-announce the site after every edit. The rule:
 
 | What changed | Do |
 |---|---|
-| **New page** | `npm run index` (announces it) and request indexing in Search Console |
-| **Edit to an already-indexed page** | Nothing manual. Google re-crawls on its own; `npm run build` keeps `<lastmod>` honest and the sitemap does the rest |
-| **Big content overhaul** | `npm run index` once |
+| **New page** | `node scripts/indexnow.mjs --changed` (announces it) and request indexing in Search Console |
+| **Edit to an already-indexed page** | Nothing manual. Google re-crawls on its own; refreshing `<lastmod>` and the sitemap do the rest |
+| **Big content overhaul** | `node scripts/indexnow.mjs --changed` once |
 
 ```bash
-npm run build      # seo.mjs + lastmod.mjs — run before committing
+node scripts/seo.mjs && node scripts/lastmod.mjs   # regenerate, then refresh <lastmod>
 git commit && git push
-npm run index      # announces only the pages that changed; skips otherwise
+node scripts/indexnow.mjs --changed              # announces only the pages that changed
 ```
 
-`npm run index` compares against `.indexnow-stamp` (the last announced commit) and
-submits only the affected URLs; `npm run index:all` re-announces everything.
+`node scripts/indexnow.mjs --changed` compares against `.indexnow-stamp` (the last
+announced commit) and submits only the affected URLs; `node scripts/indexnow.mjs`
+re-announces everything.
 Re-requesting the same URL daily achieves nothing — Google's manual
 "request indexing" is quota-limited and repeated requests do not speed a crawl.
 - **Canonical hygiene** — `/ar` (no trailing slash) is the canonical Arabic home,
