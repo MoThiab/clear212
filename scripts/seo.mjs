@@ -94,6 +94,41 @@ function consentHtml(isAr){
       + '<button class="cn" id="consentNo" type="button">Reject</button></div></div></div>';
 }
 
+/* ---------- share row ---------- */
+const SHARE_CSS = '.share{margin:22px 0 8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}'
+  + '.share-label{font-size:13px;color:var(--faint)}'
+  + '.share-acts{display:flex;gap:8px;flex-wrap:wrap}'
+  + '.sh{display:inline-flex;align-items:center;min-height:36px;padding:7px 13px;border-radius:999px;border:1px solid var(--border);background:rgba(124,58,237,.12);color:var(--muted);font:inherit;font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;transition:background .18s ease,color .18s ease}'
+  + '.sh:hover{background:rgba(124,58,237,.24);color:var(--text)}'
+  + '.sh:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}'
+  + '.sh-x{background:rgba(255,46,126,.14);border-color:rgba(255,46,126,.5);color:var(--text)}'
+  + '.sh-x:hover{background:rgba(255,46,126,.28)}';
+const SHARE_JS = '<script>(function(){var url=location.href,t=document.title,e=encodeURIComponent;'
+  + 'var u={x:"https://twitter.com/intent/tweet?text="+e(t)+"&url="+e(url),'
+  + 'wa:"https://wa.me/?text="+e(t+" "+url),'
+  + 'tg:"https://t.me/share/url?url="+e(url)+"&text="+e(t),'
+  + 'fb:"https://www.facebook.com/sharer/sharer.php?u="+e(url)};'
+  + 'var bs=document.querySelectorAll("#share .sh");'
+  + 'for(var i=0;i<bs.length;i++){(function(a){a.addEventListener("click",function(ev){'
+  + 'var n=a.getAttribute("data-net");'
+  + 'if(n==="copy"){ev.preventDefault();var b=a.textContent,d=a.getAttribute("data-done")||"Copied";'
+  + 'try{navigator.clipboard.writeText(url).then(function(){a.textContent=d;setTimeout(function(){a.textContent=b;},1600);});}'
+  + 'catch(e2){a.href=url;}return;}'
+  + 'if(u[n])a.href=u[n];});})(bs[i]);}})();<\/script>';
+
+function shareHtml(isAr){
+  var copy = isAr ? 'نسخ الرابط' : 'Copy link';
+  var done = isAr ? 'اتنسخ' : 'Copied';
+  return '<div class="share" id="share"><span class="share-label">' + (isAr ? 'شارك هالصفحة:' : 'Share this page:') + '</span>'
+    + '<div class="share-acts">'
+    + '<a class="sh sh-x" href="#" data-net="x" target="_blank" rel="noopener">X</a>'
+    + '<a class="sh" href="#" data-net="wa" target="_blank" rel="noopener">WhatsApp</a>'
+    + '<a class="sh" href="#" data-net="tg" target="_blank" rel="noopener">Telegram</a>'
+    + '<a class="sh" href="#" data-net="fb" target="_blank" rel="noopener">Facebook</a>'
+    + '<button class="sh" type="button" data-net="copy" data-done="' + done + '">' + copy + '</button>'
+    + '</div></div>';
+}
+
 /** url, type, locale, and which JSON-LD to emit */
 const PAGES = {
   'index.html': { url: '/', type: 'website', locale: 'en_US', ld: 'website' },
@@ -216,7 +251,7 @@ function headBlock(page, title, desc, ld) {
     `<meta name="twitter:image" content="${IMG}">`,
   ];
   if (ld) lines.push(`<script type="application/ld+json">${JSON.stringify(ld)}</script>`);
-  lines.push(`<style>${LANG_CSS}${CONSENT_CSS}</style>`);
+  lines.push(`<style>${LANG_CSS}${CONSENT_CSS}${SHARE_CSS}</style>`);
   if (ANALYTICS_URL) lines.push(`<script data-goatcounter="${ANALYTICS_URL}" async src="/assets/goatcounter.js"></script>`);
   lines.push(LANG_REDIRECT);
   lines.push(CONSENT_CORE);
@@ -254,7 +289,7 @@ for (const [file, page] of Object.entries(PAGES)) {
   html = html.replace(/<!-- consent:start -->[\s\S]*?<!-- consent:end -->\n?/g, '');
   html = html.replace(/[ \t]*<div class="consent" id="consent"[\s\S]*?<\/script>\n?/g, '');
   var consentBlock = '<!-- consent:start -->\n' + consentHtml(isAr) + '\n' + CONSENT_UI + '\n<!-- consent:end -->';
-  html = html.replace('</body>', consentBlock + '\n' + LANG_JS + '\n</body>');
+  html = html.replace('</body>', shareHtml(isAr) + '\n' + SHARE_JS + '\n' + consentBlock + '\n' + LANG_JS + '\n</body>');
 
   /* the button replaces the old footer text link, so drop it */
   if (file.startsWith('ar/')) {

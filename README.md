@@ -98,6 +98,12 @@ In place on every page:
 - **Analytics** — optional GoatCounter. The counter script is vendored at
   `assets/goatcounter.js`, so nothing is requested from a third party and the CSP
   stays closed. Set `ANALYTICS_URL` in `scripts/seo.mjs` and re-run the script.
+- **Share row** — X, WhatsApp, Telegram, Facebook and copy-link on all 16 pages,
+  built from the live `location.href` and `document.title`, so the shared link is
+  always the page the visitor is actually on. Labels are localised.
+- **Traffic kit** — `traffic/kit.md`: ready-to-paste X, Reddit, Facebook, LinkedIn
+  and WhatsApp copy in English and Arabic, the subreddit self-promotion rules, and
+  a 15-minute daily routine.
 - **AI crawlers explicitly allowed** in `robots.txt`: GPTBot, PerplexityBot,
   ClaudeBot, anthropic-ai, Google-Extended, Applebot-Extended, cohere-ai.
   Blocking one zeroes that platform, so check there first if citations drop.
