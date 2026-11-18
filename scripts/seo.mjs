@@ -22,6 +22,16 @@ const IMG = `${DOMAIN}/assets/og.png`;
 /** Google Search Console verification token (public by design — it ships in the page source). */
 const VERIFY = 'i3YwDaanTeyLT4FPCARVnraCQaX7D1qbjI42oHGEkWk';
 
+/* ---------- analytics (optional) ----------
+   Paste your GoatCounter endpoint here, once. The counter script is self-hosted
+   from /assets/goatcounter.js, so the Content-Security-Policy never has to open
+   up to a third party.
+
+   Register free at https://www.goatcounter.com/ and you get something like
+   https://clear212.goatcounter.com/count — paste that here and re-run
+   `node scripts/seo.mjs`. Leave empty to ship with no analytics. */
+const ANALYTICS_URL = '';
+
 /* Language switch: one button in the top bar, on every page, pointing at the
    same path in the other language. */
 const LANG_CSS = '.langbtn{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:7px 14px;border-radius:999px;border:1px solid var(--border);background:rgba(124,58,237,.14);color:var(--text);font-family:"Chakra Petch","Noto Kufi Arabic",system-ui,sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;transition:background .18s ease}'
@@ -207,6 +217,7 @@ function headBlock(page, title, desc, ld) {
   ];
   if (ld) lines.push(`<script type="application/ld+json">${JSON.stringify(ld)}</script>`);
   lines.push(`<style>${LANG_CSS}${CONSENT_CSS}</style>`);
+  if (ANALYTICS_URL) lines.push(`<script data-goatcounter="${ANALYTICS_URL}" async src="/assets/goatcounter.js"></script>`);
   lines.push(LANG_REDIRECT);
   lines.push(CONSENT_CORE);
   return `<!-- seo:start -->\n${lines.join('\n')}\n<!-- seo:end -->`;

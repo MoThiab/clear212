@@ -37,6 +37,7 @@
 
 
 
+
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 <link rel="alternate" hreflang="en" href="https://clear212.mo-automation.com/" />
 <link rel="alternate" hreflang="ar" href="https://clear212.mo-automation.com/ar" />
@@ -135,6 +136,9 @@
   .tzrow select{background:rgba(11,10,20,.7);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:8px 11px;font:inherit;font-size:14px;max-width:100%}
   .tzrow select:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,46,126,.18)}
   .utc-line{margin:9px 0 0;font-size:12.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+  .points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+  .points li{padding:11px 13px;border:1px solid var(--border);border-radius:12px;background:rgba(11,10,20,.45);font-size:14px;color:var(--muted);line-height:1.7}
+  .points b{color:var(--text)}
 
   /* checklist */
   .check{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-top:1px solid var(--border)}
@@ -211,7 +215,8 @@
 <div class="wrap">
 
   <div class="topbar">
-    <div class="brand"><span class="dot" aria-hidden="true"></span> LAUNCH NIGHT</div>
+    <div class="brand"><span class="dot" aria-hidden="true"></span> <span id="brandPre">LAUNCH NIGHT</span><span id="brandPost" hidden>OUT NOW</span></div>
+
 
 
 
@@ -220,9 +225,9 @@
   </div>
 
   <header class="hero">
-    <span class="eyebrow">Countdown · Vice City, Leonida</span>
+    <span class="eyebrow" id="eyebrow">Countdown · Vice City, Leonida</span>
     <h1>GTA&nbsp;VI</h1>
-    <p class="sub">One night, one city, <strong id="subdays">a few days left</strong>. Tick the checklist, then read the day-one answers.</p>
+    <p class="sub"><span id="preline">One night, one city, <strong id="subdays">a few days left</strong>. Tick the checklist, then read the day-one answers.</span><span id="postline" hidden>It is out. Metacritic is <strong>99</strong> and the story runs about <strong>50–60 hours</strong>. Here is what to do first.</span></p>
   </header>
 
   <main>
@@ -256,11 +261,27 @@
     </h2>
     <p class="lede">The numbers people ask about most.</p>
     <div class="stats">
+      <div class="stat"><span>Metacritic</span><b>99</b> <em>best-reviewed game ever, tied</em></div>
+      <div class="stat"><span>Story length</span><b>50–60 h</b> <em>campaign only</em></div>
       <div class="stat"><span>Price</span><b>$79.99</b> <em>standard · $99.99 ultimate</em></div>
       <div class="stat"><span>Storage needed</span><b>212 GB</b> <em>preload + ~1 GB patch</em></div>
-      <div class="stat"><span>Preload opened</span><b>10 Nov</b> <em>moved up from 12 Nov</em></div>
+      <div class="stat"><span>Frame rate</span><b>30 fps</b> <em>no 40 fps mode</em></div>
       <div class="stat"><span>Multiplayer</span><b>None</b> <em>single-player at launch</em></div>
     </div>
+  </section>
+
+  <section class="card">
+    <h2>
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+      Now that it is out
+    </h2>
+    <p class="lede">Four things worth knowing before you start.</p>
+    <ul class="points">
+      <li><b>Cancel the free GTA+ month.</b> The month bundled with a digital pre-order auto-renews at $8 a month, so cancel it before it ends if you do not want to pay.</li>
+      <li><b>Do not buy a PS5 Pro for frames.</b> There is no performance mode; the Pro adds upscaling and ray-traced shadows, not more frames.</li>
+      <li><b>Spoilers are everywhere.</b> New Zealand went first and the unlock rolls west at midnight local, so your own region may still be waiting.</li>
+      <li><b>The verdict is in.</b> 99 on Metacritic, 100% recommended on OpenCritic, and top marks from IGN, Eurogamer and The Guardian.</li>
+    </ul>
   </section>
 
   <section class="card notify" id="notify" hidden>
@@ -328,7 +349,12 @@
       localLine = document.getElementById('localLine'),
       utcLine = document.getElementById('utcLine'),
       tzSelect = document.getElementById('tzSelect'),
-      subdays = document.getElementById('subdays');
+      subdays = document.getElementById('subdays'),
+      prelaunch = document.getElementById('preline'),
+      postlaunch = document.getElementById('postline'),
+      brandPre = document.getElementById('brandPre'),
+      brandPost = document.getElementById('brandPost'),
+      eyebrow = document.getElementById('eyebrow');
 
   function pad(n){ return (n < 10 ? '0' : '') + n; }
 
@@ -404,7 +430,9 @@
     if(diff <= 0){
       dEl.textContent = '0'; hEl.textContent = '00'; mEl.textContent = '00'; sEl.textContent = '00';
       localLine.innerHTML = '<b>It is out.</b> Go play.';
-      subdays.textContent = 'it is out';
+      if(prelaunch && postlaunch){ prelaunch.hidden = true; postlaunch.hidden = false; }
+      if(brandPre && brandPost){ brandPre.hidden = true; brandPost.hidden = false; }
+      if(eyebrow) eyebrow.textContent = 'Out now · Vice City, Leonida';
       return;
     }
     var sec = Math.floor(diff / 1000);
@@ -417,6 +445,9 @@
     mEl.textContent = pad(mins);
     sEl.textContent = pad(secs);
     if(subdays) subdays.textContent = days === 1 ? 'one day left' : days + ' days left';
+    if(prelaunch && postlaunch){ prelaunch.hidden = false; postlaunch.hidden = true; }
+    if(brandPre && brandPost){ brandPre.hidden = false; brandPost.hidden = true; }
+    if(eyebrow) eyebrow.textContent = 'Countdown · Vice City, Leonida';
   }
 
   renderZone();
@@ -523,6 +554,8 @@
   }
 })();
 </script>
+
+
 
 
 

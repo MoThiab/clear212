@@ -93,7 +93,11 @@ In place on every page:
   still stores on an explicit click. Nothing is written before a choice is made.
 - **Region-aware countdown** — the launch instant is computed per IANA time zone from
   a UTC reference and displayed next to it, with a region picker that overrides the
-  browser's detected zone.
+  browser's detected zone. The hero headline flips between countdown and out-now
+  wording at the moment the visitor's own region unlocks.
+- **Analytics** — optional GoatCounter. The counter script is vendored at
+  `assets/goatcounter.js`, so nothing is requested from a third party and the CSP
+  stays closed. Set `ANALYTICS_URL` in `scripts/seo.mjs` and re-run the script.
 - **AI crawlers explicitly allowed** in `robots.txt`: GPTBot, PerplexityBot,
   ClaudeBot, anthropic-ai, Google-Extended, Applebot-Extended, cohere-ai.
   Blocking one zeroes that platform, so check there first if citations drop.

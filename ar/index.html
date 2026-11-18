@@ -136,6 +136,9 @@
   .tzrow select:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,46,126,.18)}
   .utc-line{margin:9px 0 0;font-size:12.5px;color:var(--faint);font-variant-numeric:tabular-nums}
   [dir="rtl"] .utc-line{letter-spacing:0}
+  .points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+  .points li{padding:11px 13px;border:1px solid var(--border);border-radius:12px;background:rgba(11,10,20,.45);font-size:14px;color:var(--muted);line-height:1.7}
+  .points b{color:var(--text)}
 
   /* checklist */
   .check{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-top:1px solid var(--border)}
@@ -212,15 +215,15 @@
 <div class="wrap">
 
   <div class="topbar">
-    <div class="brand"><span class="dot" aria-hidden="true"></span> ليلة الإطلاق</div>
+    <div class="brand"><span class="dot" aria-hidden="true"></span> <span id="brandPre">ليلة الإطلاق</span><span id="brandPost" hidden>طلعت هلق</span></div>
   <button class="langbtn" id="langBtn" type="button"></button>
   <div class="badge">19 نوفمبر 2026 · PS5 / XBOX SERIES X|S</div>
   </div>
 
   <header class="hero">
-    <span class="eyebrow">عدّاد · فيس سيتي، ليونيدا</span>
+    <span class="eyebrow" id="eyebrow">عدّاد · فيس سيتي، ليونيدا</span>
     <h1>GTA&nbsp;VI</h1>
-    <p class="sub">ليلة واحدة، مدينة واحدة، <strong id="subdays">كم يوم متبقي</strong>. علم على القائمة، وبعدين اقرأ إجابات يوم الإطلاق.</p>
+    <p class="sub"><span id="preline">ليلة واحدة، مدينة واحدة، <strong id="subdays">كم يوم متبقي</strong>. علم على القائمة، وبعدين اقرأ إجابات يوم الإطلاق.</span><span id="postline" hidden>طلعت. المعدل على Metacritic <strong>99</strong> والقصة تقريباً <strong>50–60 ساعة</strong>. هاد اللي تسويه أول شي.</span></p>
   </header>
 
   <main>
@@ -254,11 +257,27 @@
     </h2>
     <p class="lede">الأرقام اللي الناس بتسأل عنها أكتر.</p>
     <div class="stats">
+      <div class="stat"><span>Metacritic</span><b>99</b> <em>أكثر لعبة مصنّفة، متساوي</em></div>
+      <div class="stat"><span>طول القصة</span><b>50–60 ساعة</b> <em>الحملة بس</em></div>
       <div class="stat"><span>السعر</span><b>$79.99</b> <em>العادية · $99.99 المطلقة</em></div>
       <div class="stat"><span>المساحة المطلوبة</span><b>212 GB</b> <em>تحميل مسبق + تقريباً غيغا تحديث</em></div>
-      <div class="stat"><span>التحميل المسبق بلّش</span><b>10 نوفمبر</b> <em>انتقل من 12 نوفمبر</em></div>
+      <div class="stat"><span>معدل الإطارات</span><b>30 إطار</b> <em>ما في وضع 40</em></div>
       <div class="stat"><span>اللعب الجماعي</span><b>ما في</b> <em>لعب فردي يوم الإطلاق</em></div>
     </div>
+  </section>
+
+  <section class="card">
+    <h2>
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+      هلق إنها طلعت
+    </h2>
+    <p class="lede">أربعة أشياء بتستاهل تعرفها قبل ما تبدأ.</p>
+    <ul class="points">
+      <li><b>ألغي شهر GTA+ المجاني.</b> الشهر اللي يجي مع الطلب المسبق الرقمي بيتحدّث تلقائياً بـ 8 دولارات بالشهر، فألغيه قبل ما يخلص إذا ما بدك تدفع.</li>
+      <li><b>لا تشتري PS5 Pro عشان الإطارات.</b> ما في وضع أداء؛ الـ Pro بيضيف رفع دقة وظلال بتتبّع الأشعة، مش إطارات أكثر.</li>
+      <li><b>حرق الأحداث بكل مكان.</b> نيوزيلندا بلّشت أول واحد والفتّح بتدور غرباً نص الليل بالتوقيت المحلي، يعني منطقتك ممكن لسا بتنتظر.</li>
+      <li><b>الحكم طلع.</b> 99 على Metacritic، و100% توصية على OpenCritic، وأعلى تقييم من IGN وEurogamer وThe Guardian.</li>
+    </ul>
   </section>
 
   <section class="card notify" id="notify" hidden>
@@ -326,7 +345,12 @@
       localLine = document.getElementById('localLine'),
       utcLine = document.getElementById('utcLine'),
       tzSelect = document.getElementById('tzSelect'),
-      subdays = document.getElementById('subdays');
+      subdays = document.getElementById('subdays'),
+      prelaunch = document.getElementById('preline'),
+      postlaunch = document.getElementById('postline'),
+      brandPre = document.getElementById('brandPre'),
+      brandPost = document.getElementById('brandPost'),
+      eyebrow = document.getElementById('eyebrow');
 
   function pad(n){ return (n < 10 ? '0' : '') + n; }
 
@@ -402,7 +426,9 @@
     if(diff <= 0){
       dEl.textContent = '0'; hEl.textContent = '00'; mEl.textContent = '00'; sEl.textContent = '00';
       localLine.innerHTML = '<b>طلعت.</b> روح العب.';
-      subdays.textContent = 'طلعت';
+      if(prelaunch && postlaunch){ prelaunch.hidden = true; postlaunch.hidden = false; }
+      if(brandPre && brandPost){ brandPre.hidden = true; brandPost.hidden = false; }
+      if(eyebrow) eyebrow.textContent = 'طلعت · فيس سيتي، ليونيدا';
       return;
     }
     var sec = Math.floor(diff / 1000);
@@ -415,6 +441,9 @@
     mEl.textContent = pad(mins);
     sEl.textContent = pad(secs);
     if(subdays) subdays.textContent = days === 1 ? 'يوم واحد متبقي' : days + ' يوم متبقي';
+    if(prelaunch && postlaunch){ prelaunch.hidden = false; postlaunch.hidden = true; }
+    if(brandPre && brandPost){ brandPre.hidden = false; brandPost.hidden = true; }
+    if(eyebrow) eyebrow.textContent = 'عدّاد · فيس سيتي، ليونيدا';
   }
 
   renderZone();
@@ -521,6 +550,7 @@
   }
 })();
 </script>
+
 
 
 
