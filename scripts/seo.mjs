@@ -30,7 +30,7 @@ const VERIFY = 'i3YwDaanTeyLT4FPCARVnraCQaX7D1qbjI42oHGEkWk';
    Register free at https://www.goatcounter.com/ and you get something like
    https://clear212.goatcounter.com/count — paste that here and re-run
    `node scripts/seo.mjs`. Leave empty to ship with no analytics. */
-const ANALYTICS_URL = '';
+const ANALYTICS_URL = 'https://mo-automation.goatcounter.com/count';
 
 /* Language switch: one button in the top bar, on every page, pointing at the
    same path in the other language. */
