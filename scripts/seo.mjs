@@ -300,4 +300,26 @@ for (const [file, page] of Object.entries(PAGES)) {
   console.log(`injected: ${file}  (ld=${page.ld}${QA ? `, ${QA.length} Q&A` : ''})`);
   changed++;
 }
+
 console.log(`\n${changed} page(s) updated.`);
+
+/* Keep the Content-Security-Policy in vercel.json in step with the analytics
+   endpoint: GoatCounter sends via sendBeacon (connect-src) with an image
+   fallback (img-src), so both directives must allow the counter host. */
+if (ANALYTICS_URL) {
+  let host = '';
+  try { host = new URL(ANALYTICS_URL).origin; } catch (e) {}
+  const vf = path.join(ROOT, 'vercel.json');
+  if (host && fs.existsSync(vf)) {
+    const v = JSON.parse(fs.readFileSync(vf, 'utf8'));
+    const headers = (v.headers && v.headers[0] && v.headers[0].headers) || [];
+    const csp = headers.find((h) => h.key === 'Content-Security-Policy');
+    if (csp && !csp.value.includes(host)) {
+      csp.value = csp.value
+        .replace(/(img-src [^;]+);/, (m, d) => `${d} ${host};`)
+        .replace(/(connect-src [^;]+);/, (m, d) => `${d} ${host};`);
+      fs.writeFileSync(vf, JSON.stringify(v, null, 2) + '\n');
+      console.log(`csp: allowed ${host} in img-src and connect-src`);
+    }
+  }
+}
