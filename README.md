@@ -112,11 +112,34 @@ In place on every page:
   Blocking one zeroes that platform, so check there first if citations drop.
 - **Sitemap freshness** — every URL in `sitemap.xml` carries a `<lastmod>` date, and
   the host sends `ETag` and `Last-Modified`, so Bing and Google can revalidate
-  cheaply instead of refetching whole pages.
+  cheaply instead of refetching whole pages. `npm run build` rewrites `<lastmod>`
+  from git history (`scripts/lastmod.mjs`), so the field reflects the page's real
+  last change instead of a date that never moves.
 - **IndexNow** — `scripts/indexnow.mjs` pings indexnow.org (shared by Bing, Yahoo
-  and Yandex) with all 16 URLs whenever content changes. The key sits at the site
-  root as `f631f30dc9c2c489e2220d7c07179b98.txt`, which is also how Bing Webmaster
-  Tools verifies the site.
+  and Yandex). The key sits at the site root as
+  `f631f30dc9c2c489e2220d7c07179b98.txt`, which is also how Bing Webmaster Tools
+  verifies the site.
+
+### Indexing after an update
+
+Do not re-announce the site after every edit. The rule:
+
+| What changed | Do |
+|---|---|
+| **New page** | `npm run index` (announces it) and request indexing in Search Console |
+| **Edit to an already-indexed page** | Nothing manual. Google re-crawls on its own; `npm run build` keeps `<lastmod>` honest and the sitemap does the rest |
+| **Big content overhaul** | `npm run index` once |
+
+```bash
+npm run build      # seo.mjs + lastmod.mjs — run before committing
+git commit && git push
+npm run index      # announces only the pages that changed; skips otherwise
+```
+
+`npm run index` compares against `.indexnow-stamp` (the last announced commit) and
+submits only the affected URLs; `npm run index:all` re-announces everything.
+Re-requesting the same URL daily achieves nothing — Google's manual
+"request indexing" is quota-limited and repeated requests do not speed a crawl.
 - **Canonical hygiene** — `/ar` (no trailing slash) is the canonical Arabic home,
   matching Vercel's `trailingSlash: false`; `/ar/` 308s to it and the sitemap and
   hreflang links use the same form. `/index.html` 308s to `/`.
