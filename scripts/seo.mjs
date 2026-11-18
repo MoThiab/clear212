@@ -89,7 +89,7 @@ const PAGES = {
   'index.html': { url: '/', type: 'website', locale: 'en_US', ld: 'website' },
   'answers.html': { url: '/answers', type: 'article', locale: 'en_US', ld: 'faq' },
   'ar/answers.html': { url: '/ar/answers', type: 'article', locale: 'ar_AR', ld: 'faq' },
-  'ar/index.html': { url: '/ar/', type: 'website', locale: 'ar_AR', ld: 'webpage' },
+  'ar/index.html': { url: '/ar', type: 'website', locale: 'ar_AR', ld: 'webpage' },
   'ar/tracker.html': { url: '/ar/tracker', type: 'article', locale: 'ar_AR', ld: 'webpage' },
   'tracker.html': { url: '/tracker', type: 'article', locale: 'en_US', ld: 'webpage' },
   'privacy.html': { url: '/privacy', type: 'website', locale: 'en_US', ld: 'webpage' },
