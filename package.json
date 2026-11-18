@@ -1,0 +1,12 @@
+{
+  "name": "clear212",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Clear212 — a bilingual fan-made GTA VI launch hub. Static HTML, no dependencies.",
+  "scripts": {
+    "build": "node scripts/seo.mjs && node scripts/lastmod.mjs",
+    "index": "node scripts/indexnow.mjs --changed",
+    "index:all": "node scripts/indexnow.mjs"
+  }
+}

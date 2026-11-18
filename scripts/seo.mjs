@@ -12,6 +12,7 @@
  * Run:  node scripts/seo.mjs
  */
 import fs from 'node:fs';
+import { PAGES as PAGE_MAP } from './pages.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -129,24 +130,32 @@ function shareHtml(isAr){
 }
 
 /** url, type, locale, and which JSON-LD to emit */
-const PAGES = {
-  'index.html': { url: '/', type: 'website', locale: 'en_US', ld: 'website', share: true },
-  'answers.html': { url: '/answers', type: 'article', locale: 'en_US', ld: 'faq', share: true },
-  'ar/answers.html': { url: '/ar/answers', type: 'article', locale: 'ar_AR', ld: 'faq', share: true },
-  'ar/index.html': { url: '/ar', type: 'website', locale: 'ar_AR', ld: 'webpage', share: true },
-  'ar/tracker.html': { url: '/ar/tracker', type: 'article', locale: 'ar_AR', ld: 'webpage', share: true },
-  'tracker.html': { url: '/tracker', type: 'article', locale: 'en_US', ld: 'webpage', share: true },
-  'privacy.html': { url: '/privacy', type: 'website', locale: 'en_US', ld: 'webpage' },
-  'terms.html': { url: '/terms', type: 'website', locale: 'en_US', ld: 'webpage' },
-  'refunds.html': { url: '/refunds', type: 'website', locale: 'en_US', ld: 'webpage' },
-  'disclosure.html': { url: '/disclosure', type: 'website', locale: 'en_US', ld: 'webpage' },
-  'contact.html': { url: '/contact', type: 'website', locale: 'en_US', ld: 'webpage' },
-  'ar/privacy.html': { url: '/ar/privacy', type: 'website', locale: 'ar_AR', ld: 'webpage' },
-  'ar/terms.html': { url: '/ar/terms', type: 'website', locale: 'ar_AR', ld: 'webpage' },
-  'ar/refunds.html': { url: '/ar/refunds', type: 'website', locale: 'ar_AR', ld: 'webpage' },
-  'ar/disclosure.html': { url: '/ar/disclosure', type: 'website', locale: 'ar_AR', ld: 'webpage' },
-  'ar/contact.html': { url: '/ar/contact', type: 'website', locale: 'ar_AR', ld: 'webpage' },
+/** per-page SEO metadata. The URL comes from pages.mjs, so the two never drift. */
+const META = {
+  'index.html':      { type: 'website', locale: 'en_US', ld: 'website', share: true },
+  'answers.html':    { type: 'article', locale: 'en_US', ld: 'faq',    share: true },
+  'ar/answers.html': { type: 'article', locale: 'ar_AR', ld: 'faq',    share: true },
+  'ar/index.html':   { type: 'website', locale: 'ar_AR', ld: 'webpage', share: true },
+  'ar/tracker.html': { type: 'article', locale: 'ar_AR', ld: 'webpage', share: true },
+  'tracker.html':    { type: 'article', locale: 'en_US', ld: 'webpage', share: true },
+  'privacy.html':    { type: 'website', locale: 'en_US', ld: 'webpage' },
+  'terms.html':      { type: 'website', locale: 'en_US', ld: 'webpage' },
+  'refunds.html':    { type: 'website', locale: 'en_US', ld: 'webpage' },
+  'disclosure.html': { type: 'website', locale: 'en_US', ld: 'webpage' },
+  'contact.html':    { type: 'website', locale: 'en_US', ld: 'webpage' },
+  'ar/privacy.html':    { type: 'website', locale: 'ar_AR', ld: 'webpage' },
+  'ar/terms.html':      { type: 'website', locale: 'ar_AR', ld: 'webpage' },
+  'ar/refunds.html':    { type: 'website', locale: 'ar_AR', ld: 'webpage' },
+  'ar/disclosure.html': { type: 'website', locale: 'ar_AR', ld: 'webpage' },
+  'ar/contact.html':    { type: 'website', locale: 'ar_AR', ld: 'webpage' },
 };
+
+const PAGES = Object.fromEntries(
+  PAGE_MAP.map(([file, url]) => [
+    file,
+    { url, ...(META[file] || { type: 'website', locale: 'en_US', ld: 'webpage' }) },
+  ]),
+);
 
 const decode = (s) => String(s)
   .replace(/&amp;/g, '&')
