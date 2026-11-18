@@ -97,6 +97,16 @@ In place on every page:
 - **AI crawlers explicitly allowed** in `robots.txt`: GPTBot, PerplexityBot,
   ClaudeBot, anthropic-ai, Google-Extended, Applebot-Extended, cohere-ai.
   Blocking one zeroes that platform, so check there first if citations drop.
+- **Sitemap freshness** — every URL in `sitemap.xml` carries a `<lastmod>` date, and
+  the host sends `ETag` and `Last-Modified`, so Bing and Google can revalidate
+  cheaply instead of refetching whole pages.
+- **IndexNow** — `scripts/indexnow.mjs` pings indexnow.org (shared by Bing, Yahoo
+  and Yandex) with all 16 URLs whenever content changes. The key sits at the site
+  root as `f631f30dc9c2c489e2220d7c07179b98.txt`, which is also how Bing Webmaster
+  Tools verifies the site.
+- **Canonical hygiene** — `/ar` (no trailing slash) is the canonical Arabic home,
+  matching Vercel's `trailingSlash: false`; `/ar/` 308s to it and the sitemap and
+  hreflang links use the same form. `/index.html` 308s to `/`.
 - Every answer carries a **named source linked to the original article**, plus a
   `<time datetime>` stamp for the check date — the two signals answer engines
   weight most.
