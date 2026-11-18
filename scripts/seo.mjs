@@ -46,6 +46,44 @@ const LANG_REDIRECT = '<script>(function(){try{'
   + 'location.replace(other+location.search+location.hash);}'
   + '}catch(e){}})();<\/script>';
 
+/* ---------- cookie / local-storage consent ---------- */
+const CONSENT_CSS = '.consent{position:fixed;inset-inline:0;bottom:0;z-index:60;background:var(--card);border-top:1px solid var(--border);box-shadow:0 -18px 44px -26px rgba(0,0,0,.95)}'
+  + '.consent-in{max-width:var(--maxw,780px);margin:0 auto;padding:14px 18px calc(14px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:11px}'
+  + '.consent p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.75}'
+  + '.consent .acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}'
+  + '.consent button{border-radius:10px;padding:10px 18px;font:inherit;font-weight:700;font-size:14px;cursor:pointer;border:1px solid transparent}'
+  + '.consent .cy{background:linear-gradient(100deg,var(--pink),var(--pink-2));color:#120410}'
+  + '.consent .cn{background:transparent;color:var(--text);border-color:var(--border)}'
+  + '.consent .cn:hover{border-color:var(--pink)}'
+  + '.consent a{color:var(--cyan);text-decoration:none;font-size:13.5px}'
+  + '.consent button:focus-visible,.consent a:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}';
+/* runs in <head> so every later script can ask C212.canStore() */
+const CONSENT_CORE = '<script>(function(){var K="clear212-consent";'
+  + 'function get(){try{return localStorage.getItem(K);}catch(e){return null;}}'
+  + 'function set(v){try{localStorage.setItem(K,v);}catch(e){}}'
+  + 'window.C212={consentKey:K,get:get,set:set,canStore:function(){return get()==="yes";}};})();<\/script>';
+/* the banner itself, rendered after the page so it never blocks first paint */
+const CONSENT_UI = '<script>(function(){var el=document.getElementById("consent");if(!el)return;'
+  + 'var g=(window.C212&&C212.get)||function(){return null;};var v=g();'
+  + 'if(v!==null){document.documentElement.setAttribute("data-consent",v);el.hidden=true;return;}'
+  + 'el.hidden=false;'
+  + 'function done(x){if(window.C212)C212.set(x);document.documentElement.setAttribute("data-consent",x);el.hidden=true;}'
+  + 'document.getElementById("consentYes").addEventListener("click",function(){done("yes");});'
+  + 'document.getElementById("consentNo").addEventListener("click",function(){done("no");});})();<\/script>';
+
+/** the notice text, in the page's own language */
+function consentHtml(isAr){
+  return isAr
+    ? '<div class="consent" id="consent" hidden role="region" aria-label="إشعار التخزين"><div class="consent-in">'
+      + '<p>منخزّن لغتك المختارة وتقدّمك بالتخزين المحلي (local storage) على هالمتصفح. ما منستخدم كوكيز تتبع أو إعلانات. روابط المنتجات ممكن تحط كوكيز خاصة بالمحل. <a href="privacy.html">سياسة الخصوصية</a></p>'
+      + '<div class="acts"><button class="cy" id="consentYes" type="button">قبول</button>'
+      + '<button class="cn" id="consentNo" type="button">رفض</button></div></div></div>'
+    : '<div class="consent" id="consent" hidden role="region" aria-label="Storage notice"><div class="consent-in">'
+      + '<p>We store your language choice and your progress in this browser\'s local storage. We do not set tracking or advertising cookies. Product links may set the retailer\'s own cookies. <a href="privacy.html">Privacy policy</a></p>'
+      + '<div class="acts"><button class="cy" id="consentYes" type="button">Accept</button>'
+      + '<button class="cn" id="consentNo" type="button">Reject</button></div></div></div>';
+}
+
 /** url, type, locale, and which JSON-LD to emit */
 const PAGES = {
   'index.html': { url: '/', type: 'website', locale: 'en_US', ld: 'website' },
@@ -168,8 +206,9 @@ function headBlock(page, title, desc, ld) {
     `<meta name="twitter:image" content="${IMG}">`,
   ];
   if (ld) lines.push(`<script type="application/ld+json">${JSON.stringify(ld)}</script>`);
-  lines.push(`<style>${LANG_CSS}</style>`);
+  lines.push(`<style>${LANG_CSS}${CONSENT_CSS}</style>`);
   lines.push(LANG_REDIRECT);
+  lines.push(CONSENT_CORE);
   return `<!-- seo:start -->\n${lines.join('\n')}\n<!-- seo:end -->`;
 }
 
@@ -198,7 +237,8 @@ for (const [file, page] of Object.entries(PAGES)) {
   html = html.replace(/[ \t]*<button class="langbtn" id="langBtn" type="button"><\/button>\n?/g, '');
   html = html.replace(/<script>\(function\(\)\{var p=location\.pathname[\s\S]*?<\/script>/g, '');
   html = html.replace(/<div class="badge"/, `${LANG_BTN}\n  <div class="badge"`);
-  html = html.replace('</body>', `${LANG_JS}\n</body>`);
+  var isAr = /<html[^>]*\blang="ar"/.test(html);
+  html = html.replace('</body>', consentHtml(isAr) + '\n' + CONSENT_UI + '\n' + LANG_JS + '\n</body>');
 
   /* the button replaces the old footer text link, so drop it */
   if (file.startsWith('ar/')) {

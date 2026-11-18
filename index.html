@@ -26,9 +26,11 @@
 <meta name="twitter:description" content="Live countdown to GTA VI on 19 November 2026, a day-one readiness checklist, and answers to every launch-night question.">
 <meta name="twitter:image" content="https://clear212.mo-automation.com/assets/og.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Clear212","url":"https://clear212.mo-automation.com/","description":"Live countdown to GTA VI on 19 November 2026, a day-one readiness checklist, and answers to every launch-night question.","inLanguage":["en","ar"],"publisher":{"@id":"https://clear212.mo-automation.com/#organization"}},{"@type":"Organization","@id":"https://clear212.mo-automation.com/#organization","name":"Clear212","url":"https://clear212.mo-automation.com/","email":"hello@mo-automation.com","logo":{"@type":"ImageObject","url":"https://clear212.mo-automation.com/assets/og.png"},"sameAs":[]}]}</script>
-<style>.langbtn{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:7px 14px;border-radius:999px;border:1px solid var(--border);background:rgba(124,58,237,.14);color:var(--text);font-family:"Chakra Petch","Noto Kufi Arabic",system-ui,sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;transition:background .18s ease}.langbtn:hover{background:rgba(124,58,237,.26)}.langbtn:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}.topbar .badge{margin-inline-start:auto}</style>
+<style>.langbtn{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:7px 14px;border-radius:999px;border:1px solid var(--border);background:rgba(124,58,237,.14);color:var(--text);font-family:"Chakra Petch","Noto Kufi Arabic",system-ui,sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;transition:background .18s ease}.langbtn:hover{background:rgba(124,58,237,.26)}.langbtn:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}.topbar .badge{margin-inline-start:auto}.consent{position:fixed;inset-inline:0;bottom:0;z-index:60;background:var(--card);border-top:1px solid var(--border);box-shadow:0 -18px 44px -26px rgba(0,0,0,.95)}.consent-in{max-width:var(--maxw,780px);margin:0 auto;padding:14px 18px calc(14px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:11px}.consent p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.75}.consent .acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.consent button{border-radius:10px;padding:10px 18px;font:inherit;font-weight:700;font-size:14px;cursor:pointer;border:1px solid transparent}.consent .cy{background:linear-gradient(100deg,var(--pink),var(--pink-2));color:#120410}.consent .cn{background:transparent;color:var(--text);border-color:var(--border)}.consent .cn:hover{border-color:var(--pink)}.consent a{color:var(--cyan);text-decoration:none;font-size:13.5px}.consent button:focus-visible,.consent a:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}</style>
 <script>(function(){try{var p=location.pathname.replace(/\/+$/,"")||"/";var cur=p.indexOf("/ar")===0?"ar":"en";var want=localStorage.getItem("clear212-lang");if(want&&want!==cur){var other=cur==="ar"?(p.replace(/^\/ar/,"")||"/"):("/ar"+(p==="/"?"/":p));location.replace(other+location.search+location.hash);}}catch(e){}})();</script>
+<script>(function(){var K="clear212-consent";function get(){try{return localStorage.getItem(K);}catch(e){return null;}}function set(v){try{localStorage.setItem(K,v);}catch(e){}}window.C212={consentKey:K,get:get,set:set,canStore:function(){return get()==="yes";}};})();</script>
 <!-- seo:end -->
+
 
 
 
@@ -124,6 +126,13 @@
   .card h2 .ico{width:20px;height:20px;color:var(--pink);flex:none}
   .card .lede{color:var(--muted); font-size:14px; margin:0 0 16px}
 
+  /* region picker + UTC reference */
+  .tzrow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:12px 0 2px}
+  .tzrow label{font-size:13px;color:var(--muted)}
+  .tzrow select{background:rgba(11,10,20,.7);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:8px 11px;font:inherit;font-size:14px;max-width:100%}
+  .tzrow select:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,46,126,.18)}
+  .utc-line{margin:9px 0 0;font-size:12.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+
   /* checklist */
   .check{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-top:1px solid var(--border)}
   .check:first-of-type{border-top:0}
@@ -200,6 +209,7 @@
 
   <div class="topbar">
     <div class="brand"><span class="dot" aria-hidden="true"></span> LAUNCH NIGHT</div>
+
   <button class="langbtn" id="langBtn" type="button"></button>
   <div class="badge">19 NOV 2026 · PS5 / XBOX SERIES X|S</div>
   </div>
@@ -217,7 +227,12 @@
     <div class="unit"><b id="m" class="kbd">—</b><span>Mins</span></div>
     <div class="unit"><b id="s" class="kbd">—</b><span>Secs</span></div>
   </div>
-  <p class="local-line" id="localLine">Loading your local unlock time…</p>
+  <p class="local-line" id="localLine">Working out your unlock time…</p>
+  <div class="tzrow">
+    <label for="tzSelect">Your region</label>
+    <select id="tzSelect"></select>
+  </div>
+  <p class="utc-line" id="utcLine"></p>
 
   <section class="card">
     <h2>
@@ -226,6 +241,7 @@
     </h2>
     <p class="lede">Saved on this device. Tick them as you go.</p>
     <div id="checklist"></div>
+    <p class="lede" id="saveNote" hidden></p>
   </section>
 
   <section class="card">
@@ -280,30 +296,105 @@
 (function(){
   "use strict";
 
-  /* Countdown target: midnight local time, 19 November 2026 */
-  var TARGET = new Date(2026, 10, 19, 0, 0, 0);
+  /* ---------- countdown: per-region unlock, UTC is the reference ---------- */
+  var LAUNCH = { y:2026, m:11, d:19, h:0, min:0 };   /* midnight local on 19 Nov 2026 */
+  var ZONES = [
+    { tz:'Asia/Jerusalem',      en:'Jerusalem / West Bank' },
+    { tz:'Asia/Riyadh',         en:'Riyadh' },
+    { tz:'Asia/Dubai',          en:'Dubai' },
+    { tz:'Africa/Cairo',        en:'Cairo' },
+    { tz:'Europe/London',       en:'London' },
+    { tz:'Europe/Berlin',       en:'Berlin' },
+    { tz:'Europe/Moscow',       en:'Moscow' },
+    { tz:'America/New_York',    en:'New York' },
+    { tz:'America/Chicago',     en:'Chicago' },
+    { tz:'America/Denver',      en:'Denver' },
+    { tz:'America/Los_Angeles', en:'Los Angeles' },
+    { tz:'America/Sao_Paulo',   en:'São Paulo' },
+    { tz:'Asia/Tokyo',          en:'Tokyo' },
+    { tz:'Australia/Sydney',    en:'Sydney' },
+    { tz:'Pacific/Auckland',    en:'Auckland' }
+  ];
+
   var dEl = document.getElementById('d'),
       hEl = document.getElementById('h'),
       mEl = document.getElementById('m'),
       sEl = document.getElementById('s'),
       localLine = document.getElementById('localLine'),
+      utcLine = document.getElementById('utcLine'),
+      tzSelect = document.getElementById('tzSelect'),
       subdays = document.getElementById('subdays');
 
   function pad(n){ return (n < 10 ? '0' : '') + n; }
 
-  function localUnlockLabel(){
+  /* how far zone tz sits from UTC at a given instant */
+  function offsetMs(tz, utcMs){
     try{
-      return TARGET.toLocaleString(undefined, {
-        weekday:'long', day:'numeric', month:'long', hour:'numeric', minute:'2-digit', timeZoneName:'short'
-      });
-    }catch(e){
-      return 'midnight on 19 November 2026, your local time';
-    }
+      var s = new Date(utcMs).toLocaleString('en-US', { timeZone:tz, hour12:false,
+        year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit' });
+      var p = s.split(', '), d = p[0].split('/'), t = p[1].split(':');
+      return Date.UTC(+d[2], +d[0]-1, +d[1], (+t[0])%24, +t[1], +t[2]) - utcMs;
+    }catch(e){ return 0; }
   }
+
+  /* the UTC instant of midnight local on launch day in zone tz */
+  function targetFor(tz){
+    var base = Date.UTC(LAUNCH.y, LAUNCH.m-1, LAUNCH.d, LAUNCH.h, LAUNCH.min, 0);
+    var guess = base, prev = 0;
+    for(var i=0; i<4 && guess!==prev; i++){ prev = guess; guess = base - offsetMs(tz, guess); }
+    return guess;
+  }
+
+  function offLabel(tz, utcMs){
+    var mins = Math.round(offsetMs(tz, utcMs)/60000), a = Math.abs(mins);
+    return 'UTC' + (mins < 0 ? '-' : '+') + Math.floor(a/60) + (a%60 ? ':'+pad(a%60) : '');
+  }
+  function localLabel(utcMs, tz){
+    try{
+      return new Date(utcMs).toLocaleString('en-GB', { timeZone:tz, weekday:'long', day:'numeric', month:'long', hour:'2-digit', minute:'2-digit', hourCycle:'h23' });
+    }catch(e){ return 'midnight on 19 November 2026, local time'; }
+  }
+  function utcLabel(utcMs){ return new Date(utcMs).toISOString().replace('T',' ').replace('.000Z',' UTC'); }
+  function zoneName(tz){
+    for(var i=0;i<ZONES.length;i++) if(ZONES[i].tz === tz) return ZONES[i].en;
+    return tz.replace(/_/g,' ');
+  }
+
+  var detected = '';
+  try{ detected = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; }catch(e){}
+  var tz = detected;
+  try{
+    if(window.C212 && C212.canStore()){
+      var saved = localStorage.getItem('clear212-tz');
+      if(saved) tz = saved;
+    }
+  }catch(e){}
+  if(!tz) tz = 'Asia/Jerusalem';
+  if(!ZONES.some(function(z){ return z.tz === tz; })) ZONES.unshift({ tz:tz, en:tz.replace(/_/g,' ') });
+
+  var TARGET = targetFor(tz);
+
+  function renderZone(){
+    /* static labels + browser-formatted dates only — no user input reaches here */
+    var opts = '';
+    ZONES.forEach(function(z){
+      opts += '<option value="'+z.tz+'"'+(z.tz===tz?' selected':'')+'>'+z.en+'</option>';
+    });
+    tzSelect.innerHTML = opts;
+    localLine.innerHTML = 'Unlocks <b>'+localLabel(TARGET, tz)+'</b> in <b>'+zoneName(tz)+' ('+offLabel(tz, TARGET)+')</b>.';
+    utcLine.textContent = 'Reference (UTC): ' + utcLabel(TARGET);
+  }
+
+  tzSelect.addEventListener('change', function(){
+    tz = tzSelect.value;
+    TARGET = targetFor(tz);
+    try{ if(window.C212 && C212.canStore()) localStorage.setItem('clear212-tz', tz); }catch(e){}
+    renderZone(); tick();
+  });
 
   function tick(){
     var now = new Date();
-    var diff = TARGET.getTime() - now.getTime();
+    var diff = TARGET - now.getTime();
     if(diff <= 0){
       dEl.textContent = '0'; hEl.textContent = '00'; mEl.textContent = '00'; sEl.textContent = '00';
       localLine.innerHTML = '<b>It is out.</b> Go play.';
@@ -319,12 +410,10 @@
     hEl.textContent = pad(hrs);
     mEl.textContent = pad(mins);
     sEl.textContent = pad(secs);
-    if(subdays){
-      subdays.textContent = days === 1 ? 'one day left' : days + ' days left';
-    }
+    if(subdays) subdays.textContent = days === 1 ? 'one day left' : days + ' days left';
   }
 
-  localLine.innerHTML = 'Unlocks <b>' + localUnlockLabel() + '</b> (rolling midnight, your time zone).';
+  renderZone();
   tick();
   setInterval(tick, 1000);
 
@@ -341,15 +430,22 @@
   ];
 
   var KEY = 'gta6-checklist-v1';
+  var CAN = !!(window.C212 && C212.canStore());
   var state = {};
   try{
-    var raw = localStorage.getItem(KEY);
+    var raw = CAN ? localStorage.getItem(KEY) : null;
     state = raw ? JSON.parse(raw) : {};
   }catch(e){ state = {}; }
 
   var list = document.getElementById('checklist');
+  var saveNote = document.getElementById('saveNote');
+  if(saveNote && !CAN){
+    saveNote.hidden = false;
+    saveNote.textContent = 'Because you declined storage, your ticks stay on this page only and reset when you leave.';
+  }
 
   function save(){
+    if(!CAN) return;
     try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
   }
 
@@ -422,6 +518,9 @@
 })();
 </script>
 
+
+<div class="consent" id="consent" hidden role="region" aria-label="Storage notice"><div class="consent-in"><p>We store your language choice and your progress in this browser's local storage. We do not set tracking or advertising cookies. Product links may set the retailer's own cookies. <a href="privacy.html">Privacy policy</a></p><div class="acts"><button class="cy" id="consentYes" type="button">Accept</button><button class="cn" id="consentNo" type="button">Reject</button></div></div></div>
+<script>(function(){var el=document.getElementById("consent");if(!el)return;var g=(window.C212&&C212.get)||function(){return null;};var v=g();if(v!==null){document.documentElement.setAttribute("data-consent",v);el.hidden=true;return;}el.hidden=false;function done(x){if(window.C212)C212.set(x);document.documentElement.setAttribute("data-consent",x);el.hidden=true;}document.getElementById("consentYes").addEventListener("click",function(){done("yes");});document.getElementById("consentNo").addEventListener("click",function(){done("no");});})();</script>
 <script>(function(){var p=location.pathname.replace(/\/+$/,"")||"/";var isAr=p.indexOf("/ar")===0;var other=isAr?(p.replace(/^\/ar/,"")||"/"):("/ar"+(p==="/"?"/":p));var b=document.getElementById("langBtn");if(!b)return;b.textContent=isAr?"English":"العربية";b.addEventListener("click",function(){try{localStorage.setItem("clear212-lang",isAr?"en":"ar");}catch(e){}location.href=other+(location.search||"")+location.hash;});})();</script>
 </body>
 </html>

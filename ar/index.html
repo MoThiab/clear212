@@ -26,8 +26,9 @@
 <meta name="twitter:description" content="عدّاد حي لإطلاق GTA VI بتاريخ 19 نوفمبر 2026، وقائمة جاهزية ليوم الإطلاق، وإجابات على كل أسئلة ليلة الإطلاق.">
 <meta name="twitter:image" content="https://clear212.mo-automation.com/assets/og.png">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"ليلة إطلاق GTA VI — العدّاد وقائمة الجاهزية | Clear212","description":"عدّاد حي لإطلاق GTA VI بتاريخ 19 نوفمبر 2026، وقائمة جاهزية ليوم الإطلاق، وإجابات على كل أسئلة ليلة الإطلاق.","url":"https://clear212.mo-automation.com/ar/","inLanguage":"ar","isPartOf":{"@id":"https://clear212.mo-automation.com/#website"}}</script>
-<style>.langbtn{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:7px 14px;border-radius:999px;border:1px solid var(--border);background:rgba(124,58,237,.14);color:var(--text);font-family:"Chakra Petch","Noto Kufi Arabic",system-ui,sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;transition:background .18s ease}.langbtn:hover{background:rgba(124,58,237,.26)}.langbtn:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}.topbar .badge{margin-inline-start:auto}</style>
+<style>.langbtn{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:7px 14px;border-radius:999px;border:1px solid var(--border);background:rgba(124,58,237,.14);color:var(--text);font-family:"Chakra Petch","Noto Kufi Arabic",system-ui,sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;transition:background .18s ease}.langbtn:hover{background:rgba(124,58,237,.26)}.langbtn:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}.topbar .badge{margin-inline-start:auto}.consent{position:fixed;inset-inline:0;bottom:0;z-index:60;background:var(--card);border-top:1px solid var(--border);box-shadow:0 -18px 44px -26px rgba(0,0,0,.95)}.consent-in{max-width:var(--maxw,780px);margin:0 auto;padding:14px 18px calc(14px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:11px}.consent p{margin:0;font-size:13.5px;color:var(--muted);line-height:1.75}.consent .acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.consent button{border-radius:10px;padding:10px 18px;font:inherit;font-weight:700;font-size:14px;cursor:pointer;border:1px solid transparent}.consent .cy{background:linear-gradient(100deg,var(--pink),var(--pink-2));color:#120410}.consent .cn{background:transparent;color:var(--text);border-color:var(--border)}.consent .cn:hover{border-color:var(--pink)}.consent a{color:var(--cyan);text-decoration:none;font-size:13.5px}.consent button:focus-visible,.consent a:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}</style>
 <script>(function(){try{var p=location.pathname.replace(/\/+$/,"")||"/";var cur=p.indexOf("/ar")===0?"ar":"en";var want=localStorage.getItem("clear212-lang");if(want&&want!==cur){var other=cur==="ar"?(p.replace(/^\/ar/,"")||"/"):("/ar"+(p==="/"?"/":p));location.replace(other+location.search+location.hash);}}catch(e){}})();</script>
+<script>(function(){var K="clear212-consent";function get(){try{return localStorage.getItem(K);}catch(e){return null;}}function set(v){try{localStorage.setItem(K,v);}catch(e){}}window.C212={consentKey:K,get:get,set:set,canStore:function(){return get()==="yes";}};})();</script>
 <!-- seo:end -->
 <link rel="alternate" hreflang="en" href="https://clear212.mo-automation.com/" />
 <link rel="alternate" hreflang="ar" href="https://clear212.mo-automation.com/ar/" />
@@ -128,6 +129,14 @@
   .card h2 .ico{width:20px;height:20px;color:var(--pink);flex:none}
   .card .lede{color:var(--muted); font-size:14px; margin:0 0 16px}
 
+  /* region picker + UTC reference */
+  .tzrow{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:12px 0 2px}
+  .tzrow label{font-size:13px;color:var(--muted)}
+  .tzrow select{background:rgba(11,10,20,.7);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:8px 11px;font:inherit;font-size:14px;max-width:100%}
+  .tzrow select:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,46,126,.18)}
+  .utc-line{margin:9px 0 0;font-size:12.5px;color:var(--faint);font-variant-numeric:tabular-nums}
+  [dir="rtl"] .utc-line{letter-spacing:0}
+
   /* checklist */
   .check{display:flex; gap:12px; align-items:flex-start; padding:13px 0; border-top:1px solid var(--border)}
   .check:first-of-type{border-top:0}
@@ -221,7 +230,12 @@
     <div class="unit"><b id="m" class="kbd">—</b><span>دقائق</span></div>
     <div class="unit"><b id="s" class="kbd">—</b><span>ثواني</span></div>
   </div>
-  <p class="local-line" id="localLine">عم يتحمّل وقت الفتّح بتوقيتك…</p>
+  <p class="local-line" id="localLine">عم نحسب وقت الفتّح بتوقيتك…</p>
+  <div class="tzrow">
+    <label for="tzSelect">منطقتك</label>
+    <select id="tzSelect"></select>
+  </div>
+  <p class="utc-line" id="utcLine"></p>
 
   <section class="card">
     <h2>
@@ -230,6 +244,7 @@
     </h2>
     <p class="lede">محفوظ على هالجهاز. علم عليه مع الوقت.</p>
     <div id="checklist"></div>
+    <p class="lede" id="saveNote" hidden></p>
   </section>
 
   <section class="card">
@@ -284,30 +299,105 @@
 (function(){
   "use strict";
 
-  /* Countdown target: midnight local time, 19 November 2026 */
-  var TARGET = new Date(2026, 10, 19, 0, 0, 0);
+  /* ---------- العدّاد: فتّح بحسب المنطقة، وUTC هو الأساس ---------- */
+  var LAUNCH = { y:2026, m:11, d:19, h:0, min:0 };   /* نص الليل بتاريخ 19 نوفمبر 2026 */
+  var ZONES = [
+    { tz:'Asia/Jerusalem',      ar:'القدس / الضفة' },
+    { tz:'Asia/Riyadh',         ar:'الرياض' },
+    { tz:'Asia/Dubai',          ar:'دبي' },
+    { tz:'Africa/Cairo',        ar:'القاهرة' },
+    { tz:'Europe/London',       ar:'لندن' },
+    { tz:'Europe/Berlin',       ar:'برلين' },
+    { tz:'Europe/Moscow',       ar:'موسكو' },
+    { tz:'America/New_York',    ar:'نيويورك' },
+    { tz:'America/Chicago',     ar:'شيكاغو' },
+    { tz:'America/Denver',      ar:'دنفر' },
+    { tz:'America/Los_Angeles', ar:'لوس أنجلوس' },
+    { tz:'America/Sao_Paulo',   ar:'ساو باولو' },
+    { tz:'Asia/Tokyo',          ar:'طوكيو' },
+    { tz:'Australia/Sydney',    ar:'سيدني' },
+    { tz:'Pacific/Auckland',    ar:'أوكلاند' }
+  ];
+
   var dEl = document.getElementById('d'),
       hEl = document.getElementById('h'),
       mEl = document.getElementById('m'),
       sEl = document.getElementById('s'),
       localLine = document.getElementById('localLine'),
+      utcLine = document.getElementById('utcLine'),
+      tzSelect = document.getElementById('tzSelect'),
       subdays = document.getElementById('subdays');
 
   function pad(n){ return (n < 10 ? '0' : '') + n; }
 
-  function localUnlockLabel(){
+  /* الفرق بين منطقة tz وUTC بلحظة معينة */
+  function offsetMs(tz, utcMs){
     try{
-      return TARGET.toLocaleString(undefined, {
-        weekday:'long', day:'numeric', month:'long', hour:'numeric', minute:'2-digit', timeZoneName:'short'
-      });
-    }catch(e){
-      return 'نص الليل بتاريخ 19 نوفمبر 2026، بتوقيتك المحلي';
-    }
+      var s = new Date(utcMs).toLocaleString('en-US', { timeZone:tz, hour12:false,
+        year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit' });
+      var p = s.split(', '), d = p[0].split('/'), t = p[1].split(':');
+      return Date.UTC(+d[2], +d[0]-1, +d[1], (+t[0])%24, +t[1], +t[2]) - utcMs;
+    }catch(e){ return 0; }
   }
+
+  /* لحظة UTC ليوم 19 نوفمبر نص الليل بمنطقة tz */
+  function targetFor(tz){
+    var base = Date.UTC(LAUNCH.y, LAUNCH.m-1, LAUNCH.d, LAUNCH.h, LAUNCH.min, 0);
+    var guess = base, prev = 0;
+    for(var i=0; i<4 && guess!==prev; i++){ prev = guess; guess = base - offsetMs(tz, guess); }
+    return guess;
+  }
+
+  function offLabel(tz, utcMs){
+    var mins = Math.round(offsetMs(tz, utcMs)/60000), a = Math.abs(mins);
+    return 'UTC' + (mins < 0 ? '-' : '+') + Math.floor(a/60) + (a%60 ? ':'+pad(a%60) : '');
+  }
+  function localLabel(utcMs, tz){
+    try{
+      return new Date(utcMs).toLocaleString('ar', { timeZone:tz, weekday:'long', day:'numeric', month:'long', hour:'2-digit', minute:'2-digit', hourCycle:'h23' });
+    }catch(e){ return 'نص الليل بتاريخ 19 نوفمبر 2026 بالتوقيت المحلي'; }
+  }
+  function utcLabel(utcMs){ return new Date(utcMs).toISOString().replace('T',' ').replace('.000Z',' UTC'); }
+  function zoneName(tz){
+    for(var i=0;i<ZONES.length;i++) if(ZONES[i].tz === tz) return ZONES[i].ar;
+    return tz.replace(/_/g,' ');
+  }
+
+  var detected = '';
+  try{ detected = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; }catch(e){}
+  var tz = detected;
+  try{
+    if(window.C212 && C212.canStore()){
+      var saved = localStorage.getItem('clear212-tz');
+      if(saved) tz = saved;
+    }
+  }catch(e){}
+  if(!tz) tz = 'Asia/Jerusalem';
+  if(!ZONES.some(function(z){ return z.tz === tz; })) ZONES.unshift({ tz:tz, ar:tz.replace(/_/g,' ') });
+
+  var TARGET = targetFor(tz);
+
+  function renderZone(){
+    /* نصوص ثابتة وتواريخ منسّقة من المتصفح فقط — ما في مدخلات مستخدم لهون */
+    var opts = '';
+    ZONES.forEach(function(z){
+      opts += '<option value="'+z.tz+'"'+(z.tz===tz?' selected':'')+'>'+z.ar+'</option>';
+    });
+    tzSelect.innerHTML = opts;
+    localLine.innerHTML = 'بيفتح <b>'+localLabel(TARGET, tz)+'</b> بتوقيت <b>'+zoneName(tz)+' ('+offLabel(tz, TARGET)+')</b>.';
+    utcLine.textContent = 'الأساس (UTC): ' + utcLabel(TARGET);
+  }
+
+  tzSelect.addEventListener('change', function(){
+    tz = tzSelect.value;
+    TARGET = targetFor(tz);
+    try{ if(window.C212 && C212.canStore()) localStorage.setItem('clear212-tz', tz); }catch(e){}
+    renderZone(); tick();
+  });
 
   function tick(){
     var now = new Date();
-    var diff = TARGET.getTime() - now.getTime();
+    var diff = TARGET - now.getTime();
     if(diff <= 0){
       dEl.textContent = '0'; hEl.textContent = '00'; mEl.textContent = '00'; sEl.textContent = '00';
       localLine.innerHTML = '<b>طلعت.</b> روح العب.';
@@ -323,12 +413,10 @@
     hEl.textContent = pad(hrs);
     mEl.textContent = pad(mins);
     sEl.textContent = pad(secs);
-    if(subdays){
-      subdays.textContent = days === 1 ? 'يوم واحد متبقي' : days + ' يوم متبقي';
-    }
+    if(subdays) subdays.textContent = days === 1 ? 'يوم واحد متبقي' : days + ' يوم متبقي';
   }
 
-  localLine.innerHTML = 'بيفتح <b>' + localUnlockLabel() + '</b> (نص الليل بشكل متدرّج، بتوقيتك).';
+  renderZone();
   tick();
   setInterval(tick, 1000);
 
@@ -345,15 +433,22 @@
   ];
 
   var KEY = 'gta6-checklist-v1';
+  var CAN = !!(window.C212 && C212.canStore());
   var state = {};
   try{
-    var raw = localStorage.getItem(KEY);
+    var raw = CAN ? localStorage.getItem(KEY) : null;
     state = raw ? JSON.parse(raw) : {};
   }catch(e){ state = {}; }
 
   var list = document.getElementById('checklist');
+  var saveNote = document.getElementById('saveNote');
+  if(saveNote && !CAN){
+    saveNote.hidden = false;
+    saveNote.textContent = 'لأنك ما وافقت على التخزين، علاماتك بتبقى بهالصفحة بس وبترجع حالتها إذا طلعت.';
+  }
 
   function save(){
+    if(!CAN) return;
     try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
   }
 
@@ -426,6 +521,9 @@
 })();
 </script>
 
+
+<div class="consent" id="consent" hidden role="region" aria-label="إشعار التخزين"><div class="consent-in"><p>منخزّن لغتك المختارة وتقدّمك بالتخزين المحلي (local storage) على هالمتصفح. ما منستخدم كوكيز تتبع أو إعلانات. روابط المنتجات ممكن تحط كوكيز خاصة بالمحل. <a href="privacy.html">سياسة الخصوصية</a></p><div class="acts"><button class="cy" id="consentYes" type="button">قبول</button><button class="cn" id="consentNo" type="button">رفض</button></div></div></div>
+<script>(function(){var el=document.getElementById("consent");if(!el)return;var g=(window.C212&&C212.get)||function(){return null;};var v=g();if(v!==null){document.documentElement.setAttribute("data-consent",v);el.hidden=true;return;}el.hidden=false;function done(x){if(window.C212)C212.set(x);document.documentElement.setAttribute("data-consent",x);el.hidden=true;}document.getElementById("consentYes").addEventListener("click",function(){done("yes");});document.getElementById("consentNo").addEventListener("click",function(){done("no");});})();</script>
 <script>(function(){var p=location.pathname.replace(/\/+$/,"")||"/";var isAr=p.indexOf("/ar")===0;var other=isAr?(p.replace(/^\/ar/,"")||"/"):("/ar"+(p==="/"?"/":p));var b=document.getElementById("langBtn");if(!b)return;b.textContent=isAr?"English":"العربية";b.addEventListener("click",function(){try{localStorage.setItem("clear212-lang",isAr?"en":"ar");}catch(e){}location.href=other+(location.search||"")+location.hash;});})();</script>
 </body>
 </html>
