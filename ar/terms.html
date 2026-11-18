@@ -103,8 +103,13 @@
 
 
 
+
+
+
+<!-- consent:start -->
 <div class="consent" id="consent" hidden role="region" aria-label="إشعار التخزين"><div class="consent-in"><p>منخزّن لغتك المختارة وتقدّمك بالتخزين المحلي (local storage) على هالمتصفح. ما منستخدم كوكيز تتبع أو إعلانات. روابط المنتجات ممكن تحط كوكيز خاصة بالمحل. <a href="privacy.html">سياسة الخصوصية</a></p><div class="acts"><button class="cy" id="consentYes" type="button">قبول</button><button class="cn" id="consentNo" type="button">رفض</button></div></div></div>
 <script>(function(){var el=document.getElementById("consent");if(!el)return;var g=(window.C212&&C212.get)||function(){return null;};var v=g();if(v!==null){document.documentElement.setAttribute("data-consent",v);el.hidden=true;return;}el.hidden=false;function done(x){if(window.C212)C212.set(x);document.documentElement.setAttribute("data-consent",x);el.hidden=true;}document.getElementById("consentYes").addEventListener("click",function(){done("yes");});document.getElementById("consentNo").addEventListener("click",function(){done("no");});})();</script>
+<!-- consent:end -->
 <script>(function(){var p=location.pathname.replace(/\/+$/,"")||"/";var isAr=p.indexOf("/ar")===0;var other=isAr?(p.replace(/^\/ar/,"")||"/"):("/ar"+(p==="/"?"/":p));var b=document.getElementById("langBtn");if(!b)return;b.textContent=isAr?"English":"العربية";b.addEventListener("click",function(){try{localStorage.setItem("clear212-lang",isAr?"en":"ar");}catch(e){}location.href=other+(location.search||"")+location.hash;});})();</script>
 </body>
 </html>

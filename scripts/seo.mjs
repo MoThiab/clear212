@@ -238,7 +238,12 @@ for (const [file, page] of Object.entries(PAGES)) {
   html = html.replace(/<script>\(function\(\)\{var p=location\.pathname[\s\S]*?<\/script>/g, '');
   html = html.replace(/<div class="badge"/, `${LANG_BTN}\n  <div class="badge"`);
   var isAr = /<html[^>]*\blang="ar"/.test(html);
-  html = html.replace('</body>', consentHtml(isAr) + '\n' + CONSENT_UI + '\n' + LANG_JS + '\n</body>');
+  /* drop any previous consent block so this stays idempotent — marked ones
+     first, then the older unmarked copies from before the markers existed */
+  html = html.replace(/<!-- consent:start -->[\s\S]*?<!-- consent:end -->\n?/g, '');
+  html = html.replace(/[ \t]*<div class="consent" id="consent"[\s\S]*?<\/script>\n?/g, '');
+  var consentBlock = '<!-- consent:start -->\n' + consentHtml(isAr) + '\n' + CONSENT_UI + '\n<!-- consent:end -->';
+  html = html.replace('</body>', consentBlock + '\n' + LANG_JS + '\n</body>');
 
   /* the button replaces the old footer text link, so drop it */
   if (file.startsWith('ar/')) {
