@@ -363,9 +363,10 @@
     return tz.replace(/_/g,' ');
   }
 
+  var ALIAS = { 'Asia/Hebron':'Asia/Jerusalem', 'Asia/Gaza':'Asia/Jerusalem' };
   var detected = '';
   try{ detected = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; }catch(e){}
-  var tz = detected;
+  var tz = ALIAS[detected] || detected;
   try{
     if(window.C212 && C212.canStore()){
       var saved = localStorage.getItem('clear212-tz');
